@@ -10,6 +10,8 @@
 
 import type { Metadata, Viewport } from 'next';
 import { Nunito } from 'next/font/google';
+import Navbar from '@/components/Navbar';
+import TalonChat from '@/components/chat/TalonChat';
 import './globals.css';
 
 const nunito = Nunito({
@@ -80,9 +82,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`scroll-smooth ${nunito.variable}`}>
+    <html lang="en" className={`scroll-smooth scroll-pt-20 lg:scroll-pt-32 ${nunito.variable}`}>
       <body className={`${nunito.className} antialiased bg-white text-gray-900`}>
+        <Navbar />
         {children}
+        <TalonChat />
       </body>
     </html>
   );

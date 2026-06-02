@@ -37,14 +37,14 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section
-      className="relative bg-white pt-12 lg:pt-20 pb-12 overflow-hidden"
+      className="relative bg-white pt-8 lg:pt-12 pb-12 overflow-hidden"
       id="hero"
       aria-labelledby="hero-heading"
     >
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
 
         {/* ─── Top row: section indicator + status pill ─── */}
-        <div className="flex items-center justify-between mb-12 lg:mb-20">
+        <div className="flex items-center justify-between mb-4 lg:mb-8">
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <span className="text-[#0052FF] font-semibold" aria-hidden="true">/</span>
             <span className="tracking-wide">AllDazeWork</span>
@@ -69,18 +69,18 @@ export default function Hero({
 
           {/* Headline + sub + CTAs */}
           <div className="lg:col-span-8">
-            {/* Audience eyebrow — who we work with */}
+            {/* Audience eyebrow — who we work with
             <div className="flex items-center gap-2.5 text-sm font-medium text-gray-500 mb-5 lg:mb-6">
               <span
                 className="w-1.5 h-1.5 rounded-full bg-[#0052FF] flex-shrink-0"
                 aria-hidden="true"
               />
               <span>For Atlanta small businesses &amp; independent brand owners</span>
-            </div>
+            </div>  */}
 
             <h1
               id="hero-heading"
-              className="text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-bold leading-[0.98] tracking-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[0.98] tracking-tight"
             >
               <span className="text-gray-900">A design duo from Atlanta, </span>
               <span className="text-gray-400">
