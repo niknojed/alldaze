@@ -146,7 +146,12 @@ export default function Hero({
                 ))}
               </ul>
 
-              <div className="pt-3 mt-1 border-t border-gray-100">
+              <div className="pt-3 mt-1 border-t border-gray-100 flex items-center gap-4">
+                <img
+                  src="/design-duo.png"
+                  alt="The AllDazeWork design duo"
+                  className="w-1/2 h-auto rounded-xl object-cover border border-gray-100 flex-shrink-0"
+                />
                 <a
                   href="#contact"
                   className="group inline-flex items-center gap-1.5 text-sm font-semibold text-gray-900 hover:text-[#0052FF] transition-colors"

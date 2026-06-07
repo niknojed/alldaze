@@ -40,6 +40,39 @@ export default function Navbar({
   sectionLinks = defaultSectionLinks,
 }: NavbarProps) {
   const [open, setOpen] = useState(false);
+  // Tier-2 (in-page anchors) retracts on scroll-down, returns on scroll-up.
+  const [hideSecondary, setHideSecondary] = useState(false);
+
+  // Track scroll direction. rAF-throttled + a small threshold to ignore jitter.
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+    const THRESHOLD = 6;   // ignore sub-pixel/trackpad jitter
+    const REVEAL_AT = 80;  // always show within this many px of the top
+
+    const update = () => {
+      const y = window.scrollY;
+      const delta = y - lastY;
+
+      if (y <= REVEAL_AT) {
+        setHideSecondary(false);
+        lastY = y;
+      } else if (Math.abs(delta) > THRESHOLD) {
+        setHideSecondary(delta > 0); // down → hide, up → show
+        lastY = y;
+      }
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Close the mobile menu on Escape, and lock body scroll while it's open.
   useEffect(() => {
@@ -61,7 +94,7 @@ export default function Navbar({
     <header className="sticky top-0 z-50">
       {/* ─── Tier 1: site nav (logo + page links + Collab CTA) ─── */}
       <nav
-        className="bg-white/80 backdrop-blur-md border-b border-gray-200"
+        className="relative z-10 bg-white/80 backdrop-blur-md border-b border-gray-200"
         aria-label="Primary"
       >
         <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex items-center justify-between h-16 lg:h-20">
@@ -113,13 +146,26 @@ export default function Navbar({
       </nav>
 
       {/* ─── Tier 2: in-page section anchors (black bar, content-width, pill base) ─── */}
-      <nav className="hidden lg:block" aria-label="On this page">
+      {/* Sits behind Tier 1 (z-0 < z-10). On scroll-down its height collapses to
+          reclaim the space while the inner bar slides up and tucks under Tier 1. */}
+      <nav
+        className={`hidden lg:block relative z-0 overflow-hidden transition-[height] duration-300 ease-out motion-reduce:transition-none ${
+          hideSecondary ? 'h-0' : 'h-11'
+        }`}
+        aria-label="On this page"
+        aria-hidden={hideSecondary}
+      >
         <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
-          <div className="bg-black rounded-b-[32px] flex items-center gap-7 h-11 px-8">
+          <div
+            className={`bg-black rounded-b-[32px] flex items-center gap-7 h-11 px-8 transition-transform duration-300 ease-out motion-reduce:transition-none ${
+              hideSecondary ? '-translate-y-full' : 'translate-y-0'
+            }`}
+          >
             {sectionLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
+                tabIndex={hideSecondary ? -1 : 0}
                 className="text-xs font-semibold uppercase tracking-wide text-white/80 hover:text-white whitespace-nowrap transition-colors"
               >
                 {link.label}
