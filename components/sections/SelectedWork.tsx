@@ -53,7 +53,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         "Pure Upscale Hair Studio is a beloved barbershop & community staple owned by lead barber, Corey Cooper, and located in East Atlanta Village. Our collaboration over the years has produced effective digital services & solutions for the brand's website & booking experience — by focusing on what truly matters.",
-      heroImage: '/images/projects/pure-upscale-hero.jpg',
+      heroImage: '/PureUpscale.png',
       heroImageAlt:
         'Inside Pure Upscale Hair Studio — barber tools and equipment laid out on the workstation',
       objective:
@@ -80,7 +80,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         'TODO: Add Digilence project description — what the product does, who it serves, and the nature of your engagement.',
-      heroImage: '',
+      heroImage: '/Digilence.png',
       heroImageAlt: 'Digilence product interface',
       objective: 'TODO: Add the project objective.',
       contributions: ['UX Strategy', 'Product Design', 'Web Development'],
@@ -99,7 +99,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         'TODO: Add Roswell Barbell project description — local gym, community focus, your role.',
-      heroImage: '',
+      heroImage: '/RoswellBarbell.png',
       heroImageAlt: 'Roswell Barbell exterior or training floor',
       objective: 'TODO: Add the project objective.',
       contributions: ['Website Design', 'Local SEO', 'Brand Refinement'],
@@ -118,7 +118,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         'TODO: Add Zaba Therapy project description — practice focus, audience, and what you delivered.',
-      heroImage: '',
+      heroImage: '/ZabaTherapy.png',
       heroImageAlt: 'Zaba Therapy practice space',
       objective: 'TODO: Add the project objective.',
       contributions: ['Strategy & Research', 'Website Design', 'Copywriting Support'],
