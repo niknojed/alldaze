@@ -31,7 +31,7 @@ const defaultFeatures: Feature[] = [
     icon: <Users size={20} aria-hidden="true" />,
     title: 'Embedded Partnership',
     description:
-      "We treat your project like it's the only one we have. Because most weeks, it close to is.",
+      'We keep our roster small on purpose, so your project gets our senior attention, every week.',
   },
   {
     icon: <Layers size={20} aria-hidden="true" />,
@@ -43,7 +43,7 @@ const defaultFeatures: Feature[] = [
     icon: <LifeBuoy size={20} aria-hidden="true" />,
     title: 'Long-term Support',
     description:
-      "We don't disappear after launch. Most clients become long-term partners, not one-offs.",
+      "Most clients become long-term partners — we don't disappear after launch.",
   },
 ];
 
@@ -59,8 +59,8 @@ const defaultTestimonial: Testimonial = {
 
 const defaultValues: string[] = [
   'Collaborative by default',
-  'Atlanta-grounded',
-  'Quick turnaround',
+  'Senior hands only',
+  'Collaborators on call',
   'Clear communication',
   'Long-term partners',
 ];
@@ -91,11 +91,22 @@ export default function WhyUs({
               id="why-us-heading"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight"
             >
-              <span className="text-gray-900">Two designers, embedded with you, </span>
-              <span className="text-gray-400">building work that earns its keep.</span>
+              <span className="text-gray-900">Big-brand rigor, </span>
+              <span className="text-gray-400">at founder scale.</span>
             </h2>
           </div>
         </div>
+
+        {/*
+          PEDIGREE PARAGRAPH — ON HOLD, DO NOT SHIP.
+          Per Final Content Spec §2 + §7.1: the "lead with pedigree" paragraph
+          (lead designer's career background at large orgs + agencies) is locked
+          in framing but withheld until the studio owner (1) confirms exact client
+          names/spellings and (2) checks the One Spring / Premier Logic agreements
+          for any client-naming restrictions. Client names are intentionally NOT
+          embedded here. Once the hold is lifted: names only — no logos, no work
+          samples — leading with Home Depot / Chick-fil-A / Global Payments.
+        */}
 
         {/* Bento grid — 1 col mobile, 2 cols tablet, 4 cols desktop */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
@@ -112,7 +123,7 @@ export default function WhyUs({
             >
               <div className="relative">
                 <h3 className="text-2xl font-bold text-white leading-tight">
-                  Purposeful design for Atlanta&apos;s ambitious teams.
+                  Purposeful design for founders and teams with something to prove.
                 </h3>
                 <div className="text-xs text-white/50 mt-3 font-mono">© 2026</div>
               </div>
@@ -241,7 +252,7 @@ export default function WhyUs({
                 Designed together.
               </h3>
               <p className="text-base text-white/80 mt-3 leading-snug">
-                No fluff. No handoffs. Just two designers who show up.
+                Shipped together.
               </p>
             </div>
           </div>

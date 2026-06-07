@@ -69,27 +69,27 @@ export default function Hero({
 
           {/* Headline + sub + CTAs */}
           <div className="lg:col-span-8">
-            {/* Audience eyebrow — who we work with
+            {/* Audience eyebrow — who we work with */}
             <div className="flex items-center gap-2.5 text-sm font-medium text-gray-500 mb-5 lg:mb-6">
               <span
                 className="w-1.5 h-1.5 rounded-full bg-[#0052FF] flex-shrink-0"
                 aria-hidden="true"
               />
-              <span>For Atlanta small businesses &amp; independent brand owners</span>
-            </div>  */}
+              <span>For founders, product teams, and independent brands</span>
+            </div>
 
             <h1
               id="hero-heading"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[0.98] tracking-tight"
             >
-              <span className="text-gray-900">A design duo from Atlanta, </span>
+              <span className="text-gray-900">We design, build, and launch </span>
               <span className="text-gray-400">
-                showing up for the work that matters.
+                the work that matters.
               </span>
             </h1>
 
             <p className="mt-8 text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl">
-              Web design, UX strategy, and the engineering to ship it — all from the same two people. We design, we build, we stick around.
+              We design and build brands, sites, and apps — senior hands who&apos;ve shaped global brands, now in your corner from first idea to launch.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -149,7 +149,7 @@ export default function Hero({
               <div className="pt-3 mt-1 border-t border-gray-100 flex items-center gap-4">
                 <img
                   src="/design-duo.png"
-                  alt="The AllDazeWork design duo"
+                  alt="The AllDazeWork design studio"
                   className="w-1/2 h-auto rounded-xl object-cover border border-gray-100 flex-shrink-0"
                 />
                 <a

@@ -16,27 +16,27 @@ interface ProcessProps {
 const defaultSteps: ProcessStep[] = [
   {
     number: '01',
-    title: 'Discover',
+    title: 'Explore',
     description:
-      "We start with listening. A working session (or two) to understand your business, your customers, and what success actually looks like for you.",
+      "Before anything gets designed, we map the vision and pressure-test the idea, so we build the right thing — not just the thing that was asked for.",
   },
   {
     number: '02',
     title: 'Design',
     description:
-      "We sketch, wireframe, and prototype with you in the loop. No big reveals — you see the work as it takes shape and we shape it together.",
+      "We shape the brand, the experience, and the screens — and you see the work as it takes shape.",
   },
   {
     number: '03',
     title: 'Build',
     description:
-      "Designs become a real, fast, accessible site. We handle the technical implementation in-house — no design-to-dev handoff gap.",
+      "We engineer and ship it ourselves, so design and code never drift apart.",
   },
   {
     number: '04',
-    title: 'Deliver',
+    title: 'Launch',
     description:
-      "Launch day, training, and the docs to keep it running. We stay close after — most clients become long-term partners, not one-off projects.",
+      "We get it live, then stick around — most clients stay on long after launch day.",
   },
 ];
 
@@ -47,7 +47,7 @@ export default function Process({ steps = defaultSteps }: ProcessProps) {
         <SectionHeader
           label="Process"
           number="05"
-          heading="A clear path from idea to launch."
+          heading="From your first idea to launch day, we build it with you."
           description="Four phases, no surprises. You always know where we are and what's next."
         />
 

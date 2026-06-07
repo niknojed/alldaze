@@ -23,11 +23,11 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   metadataBase: new URL('https://alldaze.studio'),
   title: {
-    default: 'AllDazeWork — Atlanta Design Duo',
+    default: 'AllDazeWork — Atlanta Design Studio',
     template: '%s · AllDazeWork',
   },
   description:
-    "A design duo from Atlanta. Web design, UX strategy, and the engineering to ship it — for small businesses and independent brand owners.",
+    'A digital design studio in Atlanta — we design, build, and launch brands, sites, and apps for founders and teams.',
   keywords: [
     'Atlanta web design',
     'design studio',
@@ -55,17 +55,17 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://alldaze.studio',
     siteName: 'AllDazeWork',
-    title: 'AllDazeWork — Atlanta Design Duo',
+    title: 'AllDazeWork — Atlanta Design Studio',
     description:
-      'Web design, UX strategy, and the engineering to ship it — for Atlanta small businesses and independent brand owners.',
+      'A digital design studio in Atlanta — we design, build, and launch brands, sites, and apps for founders and teams.',
     // TODO: add an og-image at /public/og-image.png (1200x630)
     // images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AllDazeWork — Atlanta Design Duo',
+    title: 'AllDazeWork — Atlanta Design Studio',
     description:
-      'Web design, UX strategy, and the engineering to ship it — for Atlanta small businesses and independent brand owners.',
+      'A digital design studio in Atlanta — we design, build, and launch brands, sites, and apps for founders and teams.',
     // images: ['/og-image.png'],
   },
 };
