@@ -119,7 +119,7 @@ export default function Contact({
                 />
               </a>
               <p className="text-sm text-gray-600 mt-3">
-                Reaches both of us directly. No assistants, no filters.
+                Comes straight to the people you'll work with.
               </p>
             </div>
 

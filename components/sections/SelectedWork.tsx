@@ -53,7 +53,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         "Pure Upscale Hair Studio is a beloved barbershop & community staple owned by lead barber, Corey Cooper, and located in East Atlanta Village. Our collaboration over the years has produced effective digital services & solutions for the brand's website & booking experience — by focusing on what truly matters.",
-      heroImage: '/images/projects/pure-upscale-hero.jpg',
+      heroImage: '/PureUpscale.png',
       heroImageAlt:
         'Inside Pure Upscale Hair Studio — barber tools and equipment laid out on the workstation',
       objective:
@@ -73,6 +73,60 @@ const defaultProjects: Project[] = [
     },
   },
   {
+    id: 'cv-home-lawn',
+    // ⚠️ Final Content Spec §5 / §7.2: confirm year (2025); if you have a real
+    // review count, a number beats "5★".
+    name: 'CV Home & Lawn',
+    year: '2025',
+    type: 'Brand Identity · Website · Local Presence',
+    detail: {
+      description:
+        "A Marietta lawn-care and handyman business that needed to look as dependable online as it is on the job. We built the brand, the site, and the local-search presence from the ground up.",
+      heroImage: '',
+      heroImageAlt: 'CV Home & Lawn brand identity and website',
+      objective:
+        "Carlos had the skills and the reviews but no cohesive brand or web presence to turn local searches into booked jobs. He needed to look established — and be found when neighbors search for lawn care or a handyman.",
+      contributions: [
+        'Brand identity & logo',
+        'Website design + build',
+        'Google Business Profile setup',
+        'Local SEO & marketing foundation',
+      ],
+      biggestImpact: {
+        statValue: '5★',
+        statLabel: 'across Google & Thumbtack',
+        showStars: true,
+      },
+    },
+  },
+  {
+    id: 'you-continuum',
+    // ⚠️ Final Content Spec §5 / §7.3: confirm year (2025) and exact scope of
+    // contributions. Paused experiment — frame around craft, NOT traction; do
+    // not imply active growth or metrics.
+    name: 'YOU Continuum',
+    year: '2025',
+    type: 'Brand Identity · Product Concept · Web',
+    detail: {
+      description:
+        "A self-care platform built on a simple premise: well-being shifts by small degrees, not big leaps. We shaped the brand and the product concept — a nine-domain model and the Self-Care Compass that points people to the life area that needs them most — and brought it to life on the web.",
+      heroImage: '',
+      heroImageAlt: 'YOU Continuum brand identity and product concept',
+      objective:
+        "Turn a thoughtful philosophy about evolving personal values into something a person could actually use — a clear, data-guided starting point for self-care, instead of a vague 'where do I even begin?'",
+      contributions: [
+        'Brand identity',
+        'Product & UX concept (nine life domains + Self-Care Compass)',
+        'Web design + build',
+      ],
+      biggestImpact: {
+        statValue: '9',
+        statLabel: 'life domains mapped into one clear starting point',
+        showStars: false,
+      },
+    },
+  },
+  {
     id: 'digilence',
     name: 'Digilence',
     year: '2024',
@@ -80,7 +134,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         'TODO: Add Digilence project description — what the product does, who it serves, and the nature of your engagement.',
-      heroImage: '',
+      heroImage: '/Digilence.png',
       heroImageAlt: 'Digilence product interface',
       objective: 'TODO: Add the project objective.',
       contributions: ['UX Strategy', 'Product Design', 'Web Development'],
@@ -99,7 +153,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         'TODO: Add Roswell Barbell project description — local gym, community focus, your role.',
-      heroImage: '',
+      heroImage: '/RoswellBarbell.png',
       heroImageAlt: 'Roswell Barbell exterior or training floor',
       objective: 'TODO: Add the project objective.',
       contributions: ['Website Design', 'Local SEO', 'Brand Refinement'],
@@ -118,7 +172,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         'TODO: Add Zaba Therapy project description — practice focus, audience, and what you delivered.',
-      heroImage: '',
+      heroImage: '/ZabaTherapy.png',
       heroImageAlt: 'Zaba Therapy practice space',
       objective: 'TODO: Add the project objective.',
       contributions: ['Strategy & Research', 'Website Design', 'Copywriting Support'],
@@ -172,7 +226,7 @@ export default function SelectedWork({
             label="Selected Work"
             number="02"
             heading="Recent work, real partnerships."
-            description="A curated look at projects we've shipped alongside Atlanta businesses, founders, and product teams."
+            description="A curated look at work we've shipped with the people in our sweet spot — solo founders, local trades, and brand starters building something worth getting right."
             action={
               <a
                 href={viewAllHref}
