@@ -79,14 +79,22 @@ const defaultProjects: Project[] = [
     type: 'Product UX & Web',
     detail: {
       description:
-        'TODO: Add Digilence project description — what the product does, who it serves, and the nature of your engagement.',
+        'Before its acquisition by Aiwyn in early 2025, the team focused on automating tax engagements for firms and their clients. We were brought in to help visualize user flows and interactions across key product features. Our contributions strengthened the Digilence design system and produced high-fidelity prototypes that supported sales presentations and partnership pitches.',
       heroImage: '/Digilence.png',
-      heroImageAlt: 'Digilence product interface',
-      objective: 'TODO: Add the project objective.',
-      contributions: ['UX Strategy', 'Product Design', 'Web Development'],
+      heroImageAlt:
+        'Illustration of a delivery rider on a scooter carrying a box of tax files',
+      objective:
+        'Create UI widgets for firm dashboards & client engagement workflows.',
+      contributions: [
+        'UX Design',
+        'Rapid Prototyping',
+        'UI Development',
+        'Design System',
+        'Brand Design',
+      ],
       biggestImpact: {
-        statValue: 'TBD',
-        statLabel: 'project outcome metric',
+        statValue: '20+',
+        statLabel: 'widgets designed, dev’d & delivered',
         showStars: false,
       },
     },
@@ -98,15 +106,24 @@ const defaultProjects: Project[] = [
     type: 'Local Web & Brand',
     detail: {
       description:
-        'TODO: Add Roswell Barbell project description — local gym, community focus, your role.',
+        'Roswell Barbell is a North Atlanta staple and strength training team & facility centered in the heart of Roswell & Alpharetta. Our partnership began with the brand’s inception, where we led and delivered a full-scale web package that established and strengthened its digital presence—one that has continued to stand the test of time.',
       heroImage: '/RoswellBarbell.png',
-      heroImageAlt: 'Roswell Barbell exterior or training floor',
-      objective: 'TODO: Add the project objective.',
-      contributions: ['Website Design', 'Local SEO', 'Brand Refinement'],
+      heroImageAlt:
+        'A coach spotting a lifter during a dumbbell bench press on the training floor at Roswell Barbell',
+      objective:
+        'Make it easy for people to find the gym, join the team and get stronger.',
+      contributions: [
+        'Brand & Marketing',
+        'Web Design & Maintenance',
+        'Mobile Optimization',
+        'Streamlined Booking with Typeform',
+        'Video Production',
+        'Social Media',
+      ],
       biggestImpact: {
-        statValue: 'TBD',
-        statLabel: 'membership growth metric',
-        showStars: false,
+        statValue: '61 – 5',
+        statLabel: 'Star Average reviews on Google',
+        showStars: true,
       },
     },
   },
@@ -117,14 +134,25 @@ const defaultProjects: Project[] = [
     type: 'Web Design & Strategy',
     detail: {
       description:
-        'TODO: Add Zaba Therapy project description — practice focus, audience, and what you delivered.',
+        'Zaba Therapy is an evidenced based ABA therapy team led by Dr. Thomas Zwicker, who provide services for parents and their children with autism across home, center, and school settings.',
       heroImage: '/ZabaTherapy.png',
-      heroImageAlt: 'Zaba Therapy practice space',
-      objective: 'TODO: Add the project objective.',
-      contributions: ['Strategy & Research', 'Website Design', 'Copywriting Support'],
+      heroImageAlt:
+        'A father and child painting together on a large canvas in an art studio',
+      objective:
+        'Redesign and modernize the brand to improve discoverability and position it as a trusted industry knowledge leader.',
+      contributions: [
+        'Brand & Marketing',
+        'Logo Enhancement',
+        'Web Design & Maintenance',
+        'Content Strategy',
+        'Mobile Optimization',
+        'Booking with Jotform',
+        'HIPAA Compliant',
+      ],
       biggestImpact: {
-        statValue: 'TBD',
-        statLabel: 'engagement metric',
+        statValue: '',
+        statLabel:
+          'Helped facilitate the opening of new clinics across Connecticut, connecting families in need throughout multiple counties with the care they deserve.',
         showStars: false,
       },
     },
