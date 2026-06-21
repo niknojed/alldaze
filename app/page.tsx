@@ -12,7 +12,6 @@ import SelectedWork from '@/components/sections/SelectedWork';
 import WhyUs from '@/components/sections/WhyUs';
 import Services from '@/components/sections/Services';
 import Process from '@/components/sections/Process';
-import Testimonials from '@/components/sections/Testimonials';
 import FAQ from '@/components/sections/FAQ';
 import Contact from '@/components/sections/Contact';
 
@@ -24,7 +23,6 @@ export default function HomePage() {
       <WhyUs />
       <Services />
       <Process />
-      <Testimonials />
       <FAQ />
       <Contact />
     </main>

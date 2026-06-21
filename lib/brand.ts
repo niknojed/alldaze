@@ -25,7 +25,6 @@ export const sectionNumbers = {
   whyUs: '03',
   services: '04',
   process: '05',
-  testimonials: '06',
-  assessment: '07',
-  contact: '08',
+  faq: '06',
+  contact: '07',
 } as const;

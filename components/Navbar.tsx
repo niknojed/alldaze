@@ -30,7 +30,6 @@ const defaultSectionLinks: NavLink[] = [
   { href: '/#why-us', label: 'Why Us' },
   { href: '/#services', label: 'Services' },
   { href: '/#process', label: 'Process' },
-  { href: '/#testimonials', label: 'Testimonials' },
   { href: '/#faq', label: 'FAQ' },
   { href: '/#contact', label: 'Contact' },
 ];
