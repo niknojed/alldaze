@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Plus, ArrowUpRight } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import SectionHeader from './SectionHeader';
 
 interface FAQItem {
@@ -144,31 +144,6 @@ export default function FAQ({
             );
           })}
         </ul>
-
-        {/* Closing CTA — for the "still curious" people */}
-        <div className="mt-12 lg:mt-16 max-w-4xl mx-auto">
-          <div className="bg-gray-900 rounded-2xl p-6 lg:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h3 className="text-lg lg:text-xl font-bold text-white">
-                Still have a question?
-              </h3>
-              <p className="text-sm text-gray-400 mt-1">
-                We'll get back to you within a business day. Usually faster.
-              </p>
-            </div>
-            <a
-              href="#contact"
-              className="group inline-flex items-center gap-2 px-5 py-3 bg-white text-gray-900 hover:bg-gray-100 rounded-full text-sm font-semibold transition-colors flex-shrink-0 self-start sm:self-auto"
-            >
-              Get in touch
-              <ArrowUpRight
-                size={16}
-                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                aria-hidden="true"
-              />
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );
