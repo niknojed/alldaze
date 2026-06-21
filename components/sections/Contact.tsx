@@ -35,7 +35,7 @@ const defaultProjectTypes = [
   'UX Strategy',
   'Digital Marketing',
   'Google Ads & SEO',
-  'Not sure yet',
+  'Something else',
 ];
 
 export default function Contact({
@@ -131,15 +131,6 @@ export default function Contact({
               <p className="text-base text-gray-700">Atlanta, Georgia</p>
               <p className="text-sm text-gray-600 mt-2">
                 Working with clients worldwide — but always happy to grab coffee with our Atlanta folks.
-              </p>
-            </div>
-
-            <div className="bg-gray-900 rounded-2xl p-6 lg:p-8 text-white">
-              <h3 className="text-lg lg:text-xl font-bold mb-3">
-                Not sure if we're a fit?
-              </h3>
-              <p className="text-sm text-gray-300 leading-relaxed">
-                Send a note anyway. If it's not the right project for us, we'll point you to someone better suited. We'd rather make a great referral than waste your time.
               </p>
             </div>
           </aside>
