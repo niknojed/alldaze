@@ -19,6 +19,17 @@ interface ServicesProps {
 const defaultServices: Service[] = [
   {
     number: '01',
+    title: 'Vision & Strategy',
+    description:
+      "For founders and teams who need to decide what to build — our Blue Sky approach. We survey the landscape, pressure-test the idea, and frame a direction worth investing in, before design starts.",
+    bullets: [
+      'Discovery & vision workshops',
+      'Concept validation',
+      'Roadmap & North-Star framing',
+    ],
+  },
+  {
+    number: '02',
     title: 'Web Design',
     description:
       "Conversion-focused websites that look as good as they perform. We design and build sites that represent your brand clearly and turn visitors into customers.",
@@ -26,11 +37,12 @@ const defaultServices: Service[] = [
       'UX strategy & wireframing',
       'Visual & interface design',
       'Responsive build (Next.js / React)',
+      'AI-assisted features & automations',
       'CMS integration & handoff',
     ],
   },
   {
-    number: '02',
+    number: '03',
     title: 'UX Strategy',
     description:
       "Research and design rooted in real user behavior. We dig into who you serve, what they need, and design experiences that actually move the needle.",
@@ -38,11 +50,12 @@ const defaultServices: Service[] = [
       'User research & interviews',
       'Information architecture',
       'Prototyping & usability testing',
+      'AI & agentic product UX',
       'Design systems',
     ],
   },
   {
-    number: '03',
+    number: '04',
     title: 'Digital Marketing',
     description:
       "Campaigns and content that reach the right people. We pair brand-aligned creative with measurement so you can see what's working and double down.",
@@ -54,7 +67,7 @@ const defaultServices: Service[] = [
     ],
   },
   {
-    number: '04',
+    number: '05',
     title: 'Google Ads & SEO',
     description:
       "Get found, drive traffic, grow the business. Local SEO and paid search that puts your business in front of the people already looking for what you offer.",
@@ -74,8 +87,8 @@ export default function Services({ services = defaultServices }: ServicesProps) 
         <SectionHeader
           label="Services"
           number="04"
-          heading="What we do, and how we do it together."
-          description="Four core offerings — used independently or stacked into a full engagement. Either way, you're working with us directly, not a handoff chain."
+          heading="What we do — and how we partner to do it."
+          description="Capabilities you can use on their own or stack into a full build. Either way, you work with the people doing the work — start to finish. We build with modern tools, including AI where it genuinely earns its place; we build these for ourselves, too — Talon, the guide on this page, is one."
         />
 
         <ul className="divide-y divide-gray-200 border-y border-gray-200" role="list">

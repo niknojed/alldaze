@@ -41,9 +41,9 @@ interface SelectedWorkProps {
   viewAllHref?: string;
 }
 
-// Pure Upscale Hair Studio detail is fully populated from real content.
-// TODO: Fill in real detail for Digilence, Roswell Barbell, and Zaba Therapy
-// before launch — current entries are placeholders.
+// All project details are populated from real content. CV Home & Lawn and
+// YOU Continuum still need hero images and a year/scope confirmation pass —
+// see the inline notes on those entries.
 const defaultProjects: Project[] = [
   {
     id: 'pure-upscale',
@@ -69,6 +69,60 @@ const defaultProjects: Project[] = [
         statValue: '91 – 5',
         statLabel: 'Star Average reviews on Google',
         showStars: true,
+      },
+    },
+  },
+  {
+    id: 'cv-home-lawn',
+    // ⚠️ Final Content Spec §5 / §7.2: confirm year (2025); if you have a real
+    // review count, a number beats "5★".
+    name: 'CV Home & Lawn',
+    year: '2025',
+    type: 'Brand Identity · Website · Local Presence',
+    detail: {
+      description:
+        "A Marietta lawn-care and handyman business that needed to look as dependable online as it is on the job. We built the brand, the site, and the local-search presence from the ground up.",
+      heroImage: '',
+      heroImageAlt: 'CV Home & Lawn brand identity and website',
+      objective:
+        "Carlos had the skills and the reviews but no cohesive brand or web presence to turn local searches into booked jobs. He needed to look established — and be found when neighbors search for lawn care or a handyman.",
+      contributions: [
+        'Brand identity & logo',
+        'Website design + build',
+        'Google Business Profile setup',
+        'Local SEO & marketing foundation',
+      ],
+      biggestImpact: {
+        statValue: '5★',
+        statLabel: 'across Google & Thumbtack',
+        showStars: true,
+      },
+    },
+  },
+  {
+    id: 'you-continuum',
+    // ⚠️ Final Content Spec §5 / §7.3: confirm year (2025) and exact scope of
+    // contributions. Paused experiment — frame around craft, NOT traction; do
+    // not imply active growth or metrics.
+    name: 'YOU Continuum',
+    year: '2025',
+    type: 'Brand Identity · Product Concept · Web',
+    detail: {
+      description:
+        "A self-care platform built on a simple premise: well-being shifts by small degrees, not big leaps. We shaped the brand and the product concept — a nine-domain model and the Self-Care Compass that points people to the life area that needs them most — and brought it to life on the web.",
+      heroImage: '',
+      heroImageAlt: 'YOU Continuum brand identity and product concept',
+      objective:
+        "Turn a thoughtful philosophy about evolving personal values into something a person could actually use — a clear, data-guided starting point for self-care, instead of a vague 'where do I even begin?'",
+      contributions: [
+        'Brand identity',
+        'Product & UX concept (nine life domains + Self-Care Compass)',
+        'Web design + build',
+      ],
+      biggestImpact: {
+        statValue: '9',
+        statLabel: 'life domains mapped into one clear starting point',
+        showStars: false,
       },
     },
   },
@@ -200,7 +254,7 @@ export default function SelectedWork({
             label="Selected Work"
             number="02"
             heading="Recent work, real partnerships."
-            description="A curated look at projects we've shipped alongside Atlanta businesses, founders, and product teams."
+            description="A curated look at work we've shipped with the people in our sweet spot — solo founders, local trades, and brand starters building something worth getting right."
             action={
               <a
                 href={viewAllHref}
