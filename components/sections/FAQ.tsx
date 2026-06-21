@@ -39,13 +39,7 @@ const defaultFAQs: FAQItem[] = [
     id: 'pricing',
     question: 'How do you price work?',
     answer:
-      "Project-based, not hourly. We scope a fixed fee upfront based on what you actually need — typically $8K–$30K for a website project, more for product or ongoing work. You get a proposal with clear milestones, so you know exactly what you're paying for and when.",
-  },
-  {
-    id: 'minimum',
-    question: "What's your minimum project size?",
-    answer:
-      "No hard minimum, but we work best with projects that have room for real strategy — typically $5K and up. If your budget is smaller, we'll happily point you toward someone who's a better fit. We'd rather refer you out than do shallow work.",
+      "We usually work either project-based or on a monthly retainer, rather than hourly. Pricing is always up for discussion and depends on the scope of your project. We scope a fixed fee upfront based on what you actually need, and you get a proposal with clear milestones, so you know exactly what you're paying for and when.",
   },
   {
     id: 'support',
@@ -57,7 +51,7 @@ const defaultFAQs: FAQItem[] = [
     id: 'tech',
     question: 'What technology do you build with?',
     answer:
-      "Next.js, React, TypeScript, and Tailwind for most web work. Webflow when speed-to-launch matters more than custom code. We pick the stack that fits the project, not the other way around.",
+      "Next.js, React, TypeScript, and Tailwind for most web work, plus CMS support so your team can manage content with ease. We're also AI-forward, building with AI agents to work faster and smarter. We pick the stack that fits the project, not the other way around.",
   },
   {
     id: 'getting-started',
