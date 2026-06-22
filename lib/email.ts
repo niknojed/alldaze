@@ -1,34 +1,17 @@
 /**
- * Email sending abstraction.
+ * Email sending — Resend only.
  *
- * Supports two providers, picked via the EMAIL_PROVIDER env var:
- *   - 'resend' (default) — uses Resend's API
- *   - 'gmail'             — uses Gmail SMTP via Nodemailer with an App Password
+ * Used by /api/contact. The Gmail/Nodemailer path was removed to drop the
+ * nodemailer dependency (and its CVEs) — the studio sends via Resend.
  *
- * The same `sendContactEmail()` function is used by /api/contact regardless of
- * which provider is active. Switch providers by changing the env var only —
- * no code changes required.
- *
- * Required env vars per provider:
- *
- *   EMAIL_PROVIDER=resend
- *     RESEND_API_KEY        e.g. re_xxxx
- *     CONTACT_FROM_EMAIL    must be on a Resend-verified domain
- *                           (or 'onboarding@resend.dev' for initial testing)
- *     CONTACT_TO_EMAIL      [email protected]
- *
- *   EMAIL_PROVIDER=gmail
- *     GMAIL_USER            the Google Workspace account that sends mail
- *                           (e.g. [email protected] — recommended dedicated sender)
- *     GMAIL_APP_PASSWORD    16-char App Password from
- *                           https://myaccount.google.com/apppasswords
- *                           (requires 2FA enabled on the account)
- *     CONTACT_FROM_EMAIL    display address (defaults to GMAIL_USER)
- *     CONTACT_TO_EMAIL      [email protected]
+ * Required env vars:
+ *   RESEND_API_KEY        e.g. re_xxxx
+ *   CONTACT_FROM_EMAIL    must be on a Resend-verified domain
+ *                         (or 'onboarding@resend.dev' for initial testing)
+ *   CONTACT_TO_EMAIL      where inquiries are delivered (defaults below)
  */
 
 import { Resend } from 'resend';
-import nodemailer from 'nodemailer';
 
 export interface ContactPayload {
   name: string;
@@ -38,29 +21,11 @@ export interface ContactPayload {
 }
 
 interface SendResult {
-  provider: 'resend' | 'gmail';
+  provider: 'resend';
   id?: string;
 }
 
 export async function sendContactEmail(payload: ContactPayload): Promise<SendResult> {
-  const provider = (process.env.EMAIL_PROVIDER ?? 'resend').toLowerCase();
-
-  if (provider === 'gmail') {
-    return sendViaGmail(payload);
-  }
-  if (provider === 'resend') {
-    return sendViaResend(payload);
-  }
-  throw new Error(
-    `Unknown EMAIL_PROVIDER "${provider}". Set EMAIL_PROVIDER to "resend" or "gmail".`
-  );
-}
-
-// ─────────────────────────────────────────────────────────────
-// Resend implementation
-// ─────────────────────────────────────────────────────────────
-
-async function sendViaResend(payload: ContactPayload): Promise<SendResult> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     throw new Error('RESEND_API_KEY is not set');
@@ -84,45 +49,6 @@ async function sendViaResend(payload: ContactPayload): Promise<SendResult> {
   }
 
   return { provider: 'resend', id: data?.id };
-}
-
-// ─────────────────────────────────────────────────────────────
-// Gmail SMTP implementation (via Nodemailer)
-// ─────────────────────────────────────────────────────────────
-
-async function sendViaGmail(payload: ContactPayload): Promise<SendResult> {
-  const user = process.env.GMAIL_USER;
-  const pass = process.env.GMAIL_APP_PASSWORD;
-  if (!user || !pass) {
-    throw new Error(
-      'Gmail SMTP requires GMAIL_USER and GMAIL_APP_PASSWORD to be set'
-    );
-  }
-
-  const toEmail = process.env.CONTACT_TO_EMAIL || 'design@alldazework.com';
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || user;
-
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // use TLS
-    auth: { user, pass },
-  });
-
-  // Quick credential check — surfaces auth issues at deploy time, not at first user submission
-  // Note: this is a cheap operation, but feel free to remove if you want absolute minimal latency
-  await transporter.verify();
-
-  const info = await transporter.sendMail({
-    from: `"AllDazeWork Contact" <${fromEmail}>`,
-    to: toEmail,
-    replyTo: payload.email,
-    subject: `New project inquiry from ${payload.name}`,
-    html: buildEmailHtml(payload),
-    text: buildEmailText(payload),
-  });
-
-  return { provider: 'gmail', id: info.messageId };
 }
 
 // ─────────────────────────────────────────────────────────────
