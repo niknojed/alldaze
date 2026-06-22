@@ -1,7 +1,22 @@
 'use client';
 
-import React from 'react';
-import { Users, Layers, LifeBuoy, Star, Plus, ArrowUpRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Users, Layers, LifeBuoy, Linkedin, ArrowUpRight } from 'lucide-react';
+
+interface TeamMember {
+  /** Stable id linking a photo marker to its profile card */
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  /** Short pedigree line. Optional — only Kinan's card carries one. */
+  pedigree?: string;
+  /** Profile link — LinkedIn for Kinan, portfolio for Kameron. */
+  link?: { url: string; label: string; kind: 'linkedin' | 'portfolio' };
+  variant?: 'light' | 'dark';
+  /** Marker position on the team photo, as percentages of width/height. */
+  marker: { x: number; y: number };
+}
 
 interface Feature {
   icon: React.ReactNode;
@@ -9,253 +24,359 @@ interface Feature {
   description: string;
 }
 
-interface Testimonial {
-  rating: number; // out of 5
-  totalReviewsLabel: string;
+interface Recommendation {
   quote: string;
   author: string;
-  role: string;
+  /** Role + company line under the author's name */
+  meta: string;
+  /** How the recommender knows the team, e.g. "Worked together at …" */
+  relationship: string;
+  /** 1–2 letter avatar initials */
+  initials: string;
 }
 
 interface WhyUsProps {
-  /** The three small feature cards in column 3 */
+  /** The two people behind the studio (also drives the photo markers) */
+  team?: TeamMember[];
+  /** Three small feature cards */
   features?: Feature[];
-  /** Featured testimonial shown in column 2 */
-  testimonial?: Testimonial;
-  /** Value bullets shown under the brand card in column 1 */
-  values?: string[];
+  /** LinkedIn-style recommendations */
+  recommendations?: Recommendation[];
+  /** Team photo shown with annotated markers */
+  photoSrc?: string;
+  photoAlt?: string;
+  /** Destination for the "See all recommendations" link */
+  recommendationsUrl?: string;
 }
 
+// Marker x/y are tuned to the why-us.jpg crop — adjust if the photo is recropped.
+const defaultTeam: TeamMember[] = [
+  {
+    id: 'kameron',
+    name: 'Kameron Adams',
+    role: 'Product Designer',
+    bio: 'A product designer focused on clarity — taking something complex and making it feel effortless to use.',
+    link: {
+      url: 'https://kameronadams.design',
+      label: 'View portfolio',
+      kind: 'portfolio',
+    },
+    variant: 'light',
+    marker: { x: 36, y: 73 },
+  },
+  {
+    id: 'kinan',
+    name: 'Kinan Adams',
+    role: 'Founder · Lead Designer · Engineer',
+    bio: 'Leads design and engineering — from brand and UX through to the code that ships.',
+    pedigree:
+      'Previously Home Depot · Chick-fil-A · Boeing Credit Union, and agency work via One Spring & Premier Logic.',
+    link: {
+      url: 'https://www.linkedin.com/in/kinan-adams/',
+      label: 'View profile',
+      kind: 'linkedin',
+    },
+    variant: 'dark',
+    marker: { x: 67, y: 63 },
+  },
+];
+
+// Confirmed copy — carried over from the previous Why Us section.
 const defaultFeatures: Feature[] = [
   {
-    icon: <Users size={20} aria-hidden="true" />,
+    icon: <Users size={24} aria-hidden="true" />,
     title: 'Embedded Partnership',
     description:
       'We keep our roster small on purpose, so your project gets our senior attention, every week.',
   },
   {
-    icon: <Layers size={20} aria-hidden="true" />,
+    icon: <Layers size={24} aria-hidden="true" />,
     title: 'Design + Build',
     description:
       'No handoff gap. We design and ship the code, so what gets built is what you approved.',
   },
   {
-    icon: <LifeBuoy size={20} aria-hidden="true" />,
+    icon: <LifeBuoy size={24} aria-hidden="true" />,
     title: 'Long-term Support',
     description:
       "Most clients become long-term partners — we don't disappear after launch.",
   },
 ];
 
-// TODO: Replace with a real client quote before launch.
-const defaultTestimonial: Testimonial = {
-  rating: 5,
-  totalReviewsLabel: '20+ Happy clients across Atlanta',
-  quote:
-    'AllDazeWork got our brand and built the site to match — fast. Felt like working with our own in-house team, not a vendor.',
-  author: 'Client Name',
-  role: 'Founder, Client Company',
-};
-
-const defaultValues: string[] = [
-  'Collaborative by default',
-  'Senior hands only',
-  'Collaborators on call',
-  'Clear communication',
-  'Long-term partners',
+const defaultRecommendations: Recommendation[] = [
+  {
+    quote:
+      'A wealth of knowledge in strategy, design, and development. As a designer, he approaches challenges with a unique sense of style; as a developer, he brings ideas to life with expertly crafted code.',
+    author: 'Michael Hicks',
+    meta: 'UX Design Instructor & Product Designer',
+    relationship: 'Worked with Kinan at OneSpring',
+    initials: 'M',
+  },
+  {
+    quote:
+      'Kinan has created user experiences on a level much higher than most in his field. We consider him a core member of our team — his input is highly regarded in all our web initiatives.',
+    author: 'John Monnett',
+    meta: 'Digital Trust Consultant',
+    relationship: 'Managed Kinan directly',
+    initials: 'J',
+  },
 ];
 
 export default function WhyUs({
+  team = defaultTeam,
   features = defaultFeatures,
-  testimonial = defaultTestimonial,
-  values = defaultValues,
+  recommendations = defaultRecommendations,
+  photoSrc = '/team/why-us.jpg',
+  photoAlt = 'The AllDazeWork team — Kameron and Kinan Adams',
+  recommendationsUrl = 'https://www.linkedin.com/in/kinan-adams/details/recommendations/',
 }: WhyUsProps) {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
   return (
     <section
       className="bg-[#FAFAFA] py-24 lg:py-32"
       id="why-us"
       aria-labelledby="why-us-heading"
     >
-      <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
-        {/* Header — slash label + section number on left, duotone headline on right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-12 lg:mb-16">
-          <div className="lg:col-span-3">
-            <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
-              <span className="text-[#0052FF] font-semibold" aria-hidden="true">/</span>
-              <span className="tracking-wide">Why us</span>
-            </div>
-            <div className="text-xs text-gray-400 font-mono">(03)</div>
+      <div className="container mx-auto px-6 lg:px-12 max-w-5xl">
+        {/* ── Header ── */}
+        <div className="mb-7">
+          <div className="flex items-center gap-2 text-sm text-gray-500 mb-3.5">
+            <span className="text-[#0052FF] font-semibold" aria-hidden="true">/</span>
+            <span className="tracking-wide">Why Us</span>
+            <span className="text-xs text-gray-400 font-mono ml-auto">(03)</span>
           </div>
-          <div className="lg:col-span-9">
-            <h2
-              id="why-us-heading"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight"
-            >
-              <span className="text-gray-900">Big-brand rigor, </span>
-              <span className="text-gray-400">at founder scale.</span>
-            </h2>
+          <h2
+            id="why-us-heading"
+            className="text-4xl sm:text-5xl lg:text-[46px] font-extrabold leading-[1.04] tracking-tight text-gray-900"
+          >
+            Meet the team.
+          </h2>
+          <p className="mt-3.5 text-base text-gray-500">
+            The people behind every project.
+          </p>
+          <div className="mt-2.5 flex items-center gap-2 text-[13px] text-gray-400">
+            <span
+              className="w-2.5 h-2.5 rounded-full bg-[#0052FF] shadow-[0_0_0_3px_rgba(0,82,255,0.22)] flex-shrink-0"
+              aria-hidden="true"
+            />
+            Hover or tap a marker to meet each of us.
           </div>
         </div>
 
-        {/*
-          PEDIGREE PARAGRAPH — ON HOLD, DO NOT SHIP.
-          Per Final Content Spec §2 + §7.1: the "lead with pedigree" paragraph
-          (lead designer's career background at large orgs + agencies) is locked
-          in framing but withheld until the studio owner (1) confirms exact client
-          names/spellings and (2) checks the One Spring / Premier Logic agreements
-          for any client-naming restrictions. Client names are intentionally NOT
-          embedded here. Once the hold is lifted: names only — no logos, no work
-          samples — leading with Home Depot / Chick-fil-A / Global Payments.
-        */}
+        {/* ── Annotated team photo ── */}
+        <div className="relative leading-none">
+          <img
+            src={photoSrc}
+            alt={photoAlt}
+            className="w-full h-auto block rounded-[22px] border border-gray-200"
+          />
 
-        {/* Bento grid — 1 col mobile, 2 cols tablet, 4 cols desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-
-          {/* ── Column 1: Dark brand card on top + values list below ── */}
-          <div className="flex flex-col gap-4 lg:gap-5">
-            {/* Brand card (dark with subtle texture) */}
-            <div
-              className="relative aspect-[4/5] rounded-2xl overflow-hidden p-6 flex flex-col justify-between bg-gray-900"
-              style={{
-                backgroundImage:
-                  'radial-gradient(circle at 20% 20%, rgba(0,82,255,0.25) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(0,82,255,0.15) 0%, transparent 50%)',
-              }}
-            >
-              <div className="relative">
-                <h3 className="text-2xl font-bold text-white leading-tight">
-                  Purposeful design for founders and teams with something to prove.
-                </h3>
-                <div className="text-xs text-white/50 mt-3 font-mono">© 2026</div>
-              </div>
-              <div className="relative">
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-900 rounded-full text-sm font-semibold hover:bg-gray-100 transition-colors"
-                >
-                  Get started
-                  <Plus size={14} aria-hidden="true" />
-                </a>
-              </div>
-            </div>
-
-            {/* Values list */}
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 flex-1">
-              <ul className="space-y-3.5" role="list">
-                {values.map((value) => (
-                  <li
-                    key={value}
-                    className="flex items-center gap-3 text-sm font-semibold text-gray-900"
-                  >
-                    <span
-                      className="w-1.5 h-1.5 rounded-full bg-[#0052FF] flex-shrink-0"
-                      aria-hidden="true"
-                    />
-                    {value}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* ── Column 2: Social proof on top + testimonial below ── */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col gap-6 min-h-[500px]">
-            {/* Top: avatar cluster + rating */}
-            <div className="flex items-start justify-between">
-              <div className="flex -space-x-2" aria-hidden="true">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white" />
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 border-2 border-white" />
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 border-2 border-white" />
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-fuchsia-400 to-purple-600 border-2 border-white" />
-              </div>
-              <div className="flex items-center gap-1 text-sm font-semibold text-gray-900">
-                {testimonial.rating}/5
-                <Star
-                  size={14}
-                  className="text-yellow-400 fill-yellow-400 ml-0.5"
+          {team.map((m) => {
+            const isActive = activeId === m.id;
+            return (
+              <button
+                key={m.id}
+                type="button"
+                className="group absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 z-[3] focus:outline-none focus-visible:outline-none"
+                style={{ left: `${m.marker.x}%`, top: `${m.marker.y}%` }}
+                aria-label={`Meet ${m.name}, ${m.role}`}
+                aria-pressed={isActive}
+                onMouseEnter={() => setActiveId(m.id)}
+                onMouseLeave={() =>
+                  setActiveId((c) => (c === m.id ? null : c))
+                }
+                onFocus={() => setActiveId(m.id)}
+                onBlur={() => setActiveId((c) => (c === m.id ? null : c))}
+                onClick={() =>
+                  setActiveId((c) => (c === m.id ? null : m.id))
+                }
+              >
+                {/* Pulse */}
+                <span
+                  className="absolute inset-0 rounded-full bg-[#0052FF] opacity-50 animate-ping motion-reduce:hidden"
                   aria-hidden="true"
                 />
-              </div>
-            </div>
-            <div className="text-sm font-semibold text-gray-900 -mt-2">
-              {testimonial.totalReviewsLabel}
-            </div>
-
-            {/* Spacer pushes testimonial to the bottom */}
-            <div className="flex-1" />
-
-            {/* Testimonial block */}
-            <div className="space-y-4">
-              <div className="flex gap-0.5" aria-label={`${testimonial.rating} out of 5 stars`}>
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    size={14}
-                    className="text-gray-900 fill-gray-900"
+                {/* Dot */}
+                <span
+                  className={`absolute inset-0 rounded-full bg-[#0052FF] transition-transform duration-200 shadow-[0_0_0_4px_rgba(0,82,255,0.28),0_2px_9px_rgba(0,82,255,0.45)] group-hover:scale-[1.3] group-hover:shadow-[0_0_0_6px_rgba(0,82,255,0.32),0_4px_14px_rgba(0,82,255,0.55)] group-focus-visible:scale-[1.3] motion-reduce:transition-none ${
+                    isActive
+                      ? 'scale-[1.3] shadow-[0_0_0_6px_rgba(0,82,255,0.32),0_4px_14px_rgba(0,82,255,0.55)]'
+                      : ''
+                  }`}
+                  aria-hidden="true"
+                />
+                {/* Label */}
+                <span
+                  className={`pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-[#0A0A0A] px-2.5 py-1.5 text-[11px] font-bold tracking-tight text-white transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none ${
+                    isActive ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  {m.name}
+                  <span
+                    className="absolute left-1/2 top-full h-2 w-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-[#0A0A0A]"
                     aria-hidden="true"
                   />
-                ))}
-              </div>
-              <blockquote className="text-sm text-gray-700 leading-relaxed">
-                &ldquo;{testimonial.quote}&rdquo;
-              </blockquote>
-              <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
-                <div
-                  className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex-shrink-0"
-                  aria-hidden="true"
-                />
-                <div className="min-w-0">
-                  <div className="text-sm font-semibold text-gray-900 truncate">
-                    {testimonial.author}
-                  </div>
-                  <div className="text-xs text-gray-500 truncate">{testimonial.role}</div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
-          {/* ── Column 3: Three stacked feature cards ── */}
-          <div className="flex flex-col gap-4 lg:gap-5">
-            {features.map((feature) => (
+        {/* ── Profile cards ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-[18px]">
+          {team.map((m) => {
+            const dark = m.variant === 'dark';
+            const isActive = activeId === m.id;
+            return (
               <div
-                key={feature.title}
-                className="bg-white border border-gray-200 rounded-2xl p-5 flex-1 flex flex-col gap-2.5 min-h-[155px]"
+                key={m.id}
+                onMouseEnter={() => setActiveId(m.id)}
+                onMouseLeave={() =>
+                  setActiveId((c) => (c === m.id ? null : c))
+                }
+                className={[
+                  'rounded-[22px] p-7 flex flex-col border transition-all duration-300 will-change-transform',
+                  dark
+                    ? 'bg-[#0A0E17] border-[#1A2335]'
+                    : 'bg-white border-gray-200',
+                  isActive ? '-translate-y-1.5' : '',
+                  isActive && dark
+                    ? 'ring-2 ring-[#6E9BFF] shadow-[0_18px_40px_rgba(0,0,0,0.5)]'
+                    : '',
+                  isActive && !dark
+                    ? 'ring-2 ring-[#0052FF] border-transparent shadow-[0_18px_40px_rgba(0,82,255,0.16)]'
+                    : '',
+                  'motion-reduce:transition-none',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
               >
-                <div className="text-gray-900">{feature.icon}</div>
-                <h4 className="text-base font-bold text-gray-900 mt-1">
-                  {feature.title}
-                </h4>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  {feature.description}
+                <h3
+                  className={`text-xl font-extrabold tracking-tight ${
+                    dark ? 'text-white' : 'text-gray-900'
+                  }`}
+                >
+                  {m.name}
+                </h3>
+                <div
+                  className={`text-[13px] font-semibold mt-1 mb-3.5 ${
+                    dark ? 'text-[#6E9BFF]' : 'text-[#0052FF]'
+                  }`}
+                >
+                  {m.role}
+                </div>
+                <p
+                  className={`text-sm leading-relaxed ${
+                    dark ? 'text-[#AAB3C5]' : 'text-gray-500'
+                  }`}
+                >
+                  {m.bio}
                 </p>
+
+                {/* Pedigree — only rendered for members who carry one. */}
+                {m.pedigree && (
+                  <div
+                    className={`mt-4 pt-3.5 text-xs border-t ${
+                      dark
+                        ? 'border-[#1E2740] text-[#8A93A6]'
+                        : 'border-gray-100 text-gray-400'
+                    }`}
+                  >
+                    {m.pedigree}
+                  </div>
+                )}
+
+                {m.link && (
+                  <a
+                    href={m.link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-2 mt-auto pt-[18px] text-[13px] font-bold transition-colors ${
+                      dark
+                        ? 'text-[#5B9BFF] hover:text-white'
+                        : 'text-[#0A66C2] hover:text-[#084d92]'
+                    }`}
+                  >
+                    {m.link.kind === 'linkedin' && (
+                      <Linkedin size={16} aria-hidden="true" />
+                    )}
+                    {m.link.label}
+                    {m.link.kind === 'portfolio' && (
+                      <ArrowUpRight size={16} aria-hidden="true" />
+                    )}
+                  </a>
+                )}
               </div>
+            );
+          })}
+        </div>
+
+        {/* ── Feature cards ── */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          {features.map((feature) => (
+            <div
+              key={feature.title}
+              className="bg-white border border-gray-200 rounded-[22px] p-6"
+            >
+              <div className="text-gray-900 mb-3.5">{feature.icon}</div>
+              <h3 className="text-base font-bold text-gray-900 mb-1.5">
+                {feature.title}
+              </h3>
+              <p className="text-[13.5px] text-gray-500 leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* ── Recommendations ── */}
+        <div className="mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {recommendations.map((rec, i) => (
+              <figure
+                key={`${rec.author}-${i}`}
+                className="bg-white border border-gray-200 rounded-[22px] p-6 flex flex-col gap-3"
+              >
+                <figcaption className="flex items-center gap-2 text-[11px] font-bold text-[#0A66C2]">
+                  <Linkedin size={14} aria-hidden="true" />
+                  Recommended on LinkedIn
+                </figcaption>
+                <blockquote className="text-sm leading-relaxed text-gray-700">
+                  &ldquo;{rec.quote}&rdquo;
+                </blockquote>
+                <div className="flex items-center gap-2.5 pt-3 mt-auto border-t border-gray-100">
+                  <span
+                    className="w-[38px] h-[38px] rounded-full bg-gradient-to-br from-[#C9D3E6] to-[#AEBBD2] flex-shrink-0 flex items-center justify-center text-white font-extrabold text-sm"
+                    aria-hidden="true"
+                  >
+                    {rec.initials}
+                  </span>
+                  <div className="min-w-0">
+                    <div className="text-[13.5px] font-bold text-gray-900 truncate">
+                      {rec.author}
+                    </div>
+                    <div className="text-[11.5px] text-gray-500 truncate">
+                      {rec.meta}
+                    </div>
+                    <div className="text-[10.5px] italic text-gray-400 truncate">
+                      {rec.relationship}
+                    </div>
+                  </div>
+                </div>
+              </figure>
             ))}
           </div>
 
-          {/* ── Column 4: Tall blue brand poster card ── */}
-          <div
-            className="relative rounded-2xl overflow-hidden p-6 flex flex-col justify-between min-h-[500px] bg-[#0052FF]"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at 80% 10%, rgba(255,255,255,0.18) 0%, transparent 45%), radial-gradient(circle at 10% 90%, rgba(0,0,0,0.25) 0%, transparent 55%)',
-            }}
+          <a
+            href={recommendationsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-4 bg-[#F4F8FF] border border-[#D9E6FF] rounded-2xl px-[18px] py-3 text-[13px] font-bold text-[#0A66C2] hover:bg-[#E9F1FF] transition-colors"
           >
-            <div className="relative flex items-start justify-between">
-              <h3 className="text-lg font-bold text-white">AllDazeWork®</h3>
-              <ArrowUpRight
-                size={18}
-                className="text-white/60"
-                aria-hidden="true"
-              />
-            </div>
-            <div className="relative">
-              <h3 className="text-3xl lg:text-4xl font-bold text-white leading-[1.1] tracking-tight">
-                Designed together.
-              </h3>
-              <p className="text-base text-white/80 mt-3 leading-snug">
-                Shipped together.
-              </p>
-            </div>
-          </div>
+            See all 6 recommendations on LinkedIn
+            <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
         </div>
       </div>
     </section>
