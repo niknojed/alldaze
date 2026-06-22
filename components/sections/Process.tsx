@@ -45,8 +45,6 @@ export default function Process({ steps = defaultSteps }: ProcessProps) {
     <section className="bg-[#FAFAFA] py-24 lg:py-32" id="process" aria-labelledby="process-heading">
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
         <SectionHeader
-          label="Process"
-          number="05"
           heading="From your first idea to launch day, we build it with you."
           description="Four phases, no surprises. You always know where we are and what's next."
         />

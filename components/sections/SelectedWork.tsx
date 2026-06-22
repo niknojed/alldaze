@@ -37,8 +37,6 @@ interface SelectedWorkProps {
   projects?: Project[];
   /** Optional analytics callback — fires alongside the modal opening */
   onProjectClick?: (projectId: string) => void;
-  /** Href for the "View all" link */
-  viewAllHref?: string;
 }
 
 // All project details are populated from real content. CV Home & Lawn and
@@ -216,7 +214,6 @@ const defaultProjects: Project[] = [
 export default function SelectedWork({
   projects = defaultProjects,
   onProjectClick,
-  viewAllHref = '/work',
 }: SelectedWorkProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [openProjectId, setOpenProjectId] = useState<string | null>(null);
@@ -251,22 +248,8 @@ export default function SelectedWork({
       >
         <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
           <SectionHeader
-            label="Selected Work"
-            number="02"
             heading="Recent work, real partnerships."
             description="A curated look at work we've shipped with the people in our sweet spot — solo founders, local trades, and brand starters building something worth getting right."
-            action={
-              <a
-                href={viewAllHref}
-                className="group inline-flex items-center gap-1.5 text-sm font-semibold text-gray-900 hover:text-[#0052FF] transition-colors"
-              >
-                View all projects
-                <ArrowUpRight
-                  size={16}
-                  className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </a>
-            }
           />
 
           <ul className="border-t border-gray-200" role="list">

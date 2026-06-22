@@ -141,11 +141,6 @@ export default function WhyUs({
       <div className="container mx-auto px-6 lg:px-12 max-w-5xl">
         {/* ── Header ── */}
         <div className="mb-7">
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-3.5">
-            <span className="text-[#0052FF] font-semibold" aria-hidden="true">/</span>
-            <span className="tracking-wide">Why Us</span>
-            <span className="text-xs text-gray-400 font-mono ml-auto">(03)</span>
-          </div>
           <h2
             id="why-us-heading"
             className="text-4xl sm:text-5xl lg:text-[46px] font-extrabold leading-[1.04] tracking-tight text-gray-900"

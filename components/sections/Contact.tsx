@@ -91,8 +91,6 @@ export default function Contact({
     >
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
         <SectionHeader
-          label="Contact"
-          number="07"
           heading="Let's build something good."
           description="Tell us what you're working on. We'll get back within a business day — usually faster."
         />

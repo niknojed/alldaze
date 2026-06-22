@@ -85,10 +85,8 @@ export default function Services({ services = defaultServices }: ServicesProps) 
     <section className="bg-white py-24 lg:py-32" id="services" aria-labelledby="services-heading">
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
         <SectionHeader
-          label="Services"
-          number="04"
           heading="What we do — and how we partner to do it."
-          description="Capabilities you can use on their own or stack into a full build. Either way, you work with the people doing the work — start to finish. We build with modern tools, including AI where it genuinely earns its place; we build these for ourselves, too — Talon, the guide on this page, is one."
+          description="Hire us for one piece, or the whole build. Either way, you're working with us directly the whole way. We use AI and modern tools where they make the work better — Talon, the guide on this page, is one we built."
         />
 
         <ul className="divide-y divide-gray-200 border-y border-gray-200" role="list">

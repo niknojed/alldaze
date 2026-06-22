@@ -82,7 +82,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`scroll-smooth scroll-pt-20 lg:scroll-pt-32 ${nunito.variable}`}>
+    <html lang="en" className={`scroll-smooth scroll-pt-20 lg:scroll-pt-24 ${nunito.variable}`}>
       <body className={`${nunito.className} antialiased bg-white text-gray-900`}>
         <Navbar />
         {children}
