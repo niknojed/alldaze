@@ -14,6 +14,7 @@
   --brand: #0052FF;
   --brand-hover: #003ECC;
   --brand-glow: rgba(0, 82, 255, 0.45);
+  --brand-shadow: rgba(0, 46, 150, 0.55);
   --metal: #C3C9D4;
 }
 
@@ -33,14 +34,35 @@
   cursor: pointer;
   z-index: 9999;
   padding: 0;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25), 0 0 0 0 var(--brand-glow);
+  box-shadow: 0 10px 32px var(--brand-shadow), 0 0 0 0 var(--brand-glow);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.35s ease, border-color 0.35s ease;
+  animation: talonShadowPulse 30s ease-out infinite;
 }
 .launcher:hover {
   transform: translateY(-4px);
   border-color: var(--brand);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3), 0 0 24px 2px var(--brand-glow);
+  box-shadow: 0 16px 44px var(--brand-shadow), 0 0 24px 2px var(--brand-glow);
+}
+/* Pause the pulse while hovered or open so the hover glow / steady state win */
+.launcher:hover,
+.launcher.open {
+  animation: none;
+}
+
+/* Pulse the deep-blue drop shadow once every 30s: a quick bloom + emanating
+   ring, then quiet for the rest of the cycle. */
+@keyframes talonShadowPulse {
+  0% {
+    box-shadow: 0 10px 32px var(--brand-shadow), 0 0 0 0 rgba(0, 82, 255, 0.5);
+  }
+  4% {
+    box-shadow: 0 14px 44px var(--brand-shadow), 0 0 26px 10px rgba(0, 82, 255, 0.5);
+  }
+  16%,
+  100% {
+    box-shadow: 0 10px 32px var(--brand-shadow), 0 0 0 16px rgba(0, 82, 255, 0);
+  }
 }
 .eagle {
   width: 38px;
@@ -356,6 +378,7 @@
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .launcher:not(:hover):not(.open) .eagle { animation: none; }
+  .launcher { animation: none; }
   .orbitBird { animation-duration: 3s; }
   .statusDot { animation: none; }
   .msg { animation: none; }
