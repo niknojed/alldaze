@@ -21,7 +21,7 @@ const defaultServices: Service[] = [
     number: '01',
     title: 'Vision & Strategy',
     description:
-      "For founders and teams who need to decide what to build — our Blue Sky approach. We survey the landscape, pressure-test the idea, and frame a direction worth investing in, before design starts.",
+      "For founders and teams who need to decide what to build. We survey the landscape, pressure-test the idea, and frame a direction worth investing in, before design starts.",
     bullets: [
       'Discovery & vision workshops',
       'Concept validation',
