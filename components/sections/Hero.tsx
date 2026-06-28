@@ -87,13 +87,6 @@ export default function Hero({
           {/* "Currently" calling card */}
           <aside className="lg:col-span-4" aria-label="Studio status card">
             <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col gap-5">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase tracking-widest text-gray-400">
-                  Currently
-                </span>
-                <span className="text-xs font-mono text-[#0052FF]">★</span>
-              </div>
-
               <ul className="space-y-0" role="list">
                 {currentlyItems.map((item, i) => (
                   <li
@@ -113,11 +106,17 @@ export default function Hero({
               </ul>
 
               <div className="pt-3 mt-1 border-t border-gray-100 flex items-center gap-4">
-                <img
-                  src="/design-duo.png"
-                  alt="The AllDazeWork design studio"
-                  className="w-1/2 h-auto rounded-xl object-cover border border-gray-100 flex-shrink-0"
-                />
+                <a
+                  href="#why-us"
+                  aria-label="Meet the team"
+                  className="group relative block w-1/2 flex-shrink-0 rounded-xl hover:z-20 focus:outline-none focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-[#0052FF] focus-visible:ring-offset-2"
+                >
+                  <img
+                    src="/design-duo.png"
+                    alt="The AllDazeWork design studio — meet the team"
+                    className="w-full h-auto rounded-xl object-cover border border-gray-100 origin-bottom-left transition-transform duration-300 ease-out group-hover:scale-[1.6] group-hover:border-[#0052FF] group-hover:shadow-2xl group-focus-visible:scale-[1.6] motion-reduce:transform-none"
+                  />
+                </a>
                 <a
                   href="#contact"
                   className="group inline-flex items-center gap-1.5 text-sm font-semibold text-gray-900 hover:text-[#0052FF] transition-colors"
