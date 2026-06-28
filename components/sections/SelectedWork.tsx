@@ -82,7 +82,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         "A Marietta lawn-care and handyman business that needed to look as dependable online as it is on the job. We built the brand, the site, and the local-search presence from the ground up.",
-      heroImage: '',
+      heroImage: '/cv-home_720.png',
       heroImageAlt: 'CV Home & Lawn brand identity and website',
       objective:
         "Carlos had the skills and the reviews but no cohesive brand or web presence to turn local searches into booked jobs. He needed to look established — and be found when neighbors search for lawn care or a handyman.",
@@ -110,7 +110,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         "A self-care platform built on a simple premise: well-being shifts by small degrees, not big leaps. We shaped the brand and the product concept — a nine-domain model and the Self-Care Compass that points people to the life area that needs them most — and brought it to life on the web.",
-      heroImage: '',
+      heroImage: '/yc-image_720.png',
       heroImageAlt: 'YOU Continuum brand identity and product concept',
       objective:
         "Turn a thoughtful philosophy about evolving personal values into something a person could actually use — a clear, data-guided starting point for self-care, instead of a vague 'where do I even begin?'",
