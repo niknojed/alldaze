@@ -79,8 +79,6 @@ export default function FAQ({
     >
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
         <SectionHeader
-          label="FAQ"
-          number="06"
           heading="Questions we hear often."
           description="Don't see what you're looking for? Reach out — we're friendly."
         />

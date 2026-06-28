@@ -11,15 +11,10 @@ module.exports = {
         nunito: ['var(--font-nunito)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'hero-marquee': 'hero-marquee 40s linear infinite',
         'modal-fade': 'modal-fade 200ms ease-out',
         'modal-scale': 'modal-scale 300ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
-        'hero-marquee': {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(-33.333%)' },
-        },
         'modal-fade': {
           from: { opacity: '0' },
           to: { opacity: '1' },
