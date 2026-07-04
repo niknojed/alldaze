@@ -131,7 +131,7 @@ export default function ProjectModal({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 p-6 pt-16 sm:p-10 sm:pt-16 lg:p-16 lg:pt-20">
 
           {/* ── Left column ── */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 lg:flex lg:flex-col">
             <h2
               id={titleId}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-5"
@@ -142,19 +142,22 @@ export default function ProjectModal({
               {detail.description}
             </p>
 
-            {/* Hero image */}
-            <div className="rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3]">
+            {/* Hero image — 4:3 on mobile; on desktop it grows to fill the
+                column so its bottom aligns with the sidebar (no gap below). */}
+            <div className="relative rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3] lg:aspect-auto lg:flex-1 lg:min-h-[320px]">
               {detail.heroImage ? (
                 // Using a plain <img> here so the component works without next/image config.
                 // Swap to <Image> from next/image once your images are in /public.
+                // Absolutely positioned so it fills the box on all sides even when
+                // the box grows via flex-1 on desktop.
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={detail.heroImage}
                   alt={detail.heroImageAlt}
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center text-sm text-gray-500">
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center text-sm text-gray-500">
                   Hero image placeholder
                 </div>
               )}
