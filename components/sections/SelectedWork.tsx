@@ -30,6 +30,8 @@ export interface Project {
   year: string;
   /** Short descriptor — e.g. "Brand & Web Design" */
   type: string;
+  /** Business category shown as subtext under the name — e.g. "Barber Shop" */
+  category?: string;
   detail: ProjectDetail;
 }
 
@@ -48,6 +50,7 @@ const defaultProjects: Project[] = [
     name: 'Pure Upscale Hair Studio',
     year: '2024',
     type: 'Brand & Web Design',
+    category: 'Barber Shop',
     detail: {
       description:
         "Pure Upscale Hair Studio is a beloved barbershop & community staple owned by lead barber, Corey Cooper, and located in East Atlanta Village. Our collaboration over the years has produced effective digital services & solutions for the brand's website & booking experience — by focusing on what truly matters.",
@@ -77,6 +80,7 @@ const defaultProjects: Project[] = [
     name: 'CV Home & Lawn',
     year: '2025',
     type: 'Brand Identity · Website · Local Presence',
+    category: 'Home Lawn Service',
     detail: {
       description:
         "A Marietta lawn-care and handyman business that needed to look as dependable online as it is on the job. We built the brand, the site, and the local-search presence from the ground up.",
@@ -156,6 +160,7 @@ const defaultProjects: Project[] = [
     name: 'Roswell Barbell',
     year: '2023',
     type: 'Local Web & Brand',
+    category: 'Fitness Gym',
     detail: {
       description:
         'Roswell Barbell is a North Atlanta staple and strength training team & facility centered in the heart of Roswell & Alpharetta. Our partnership began with the brand’s inception, where we led and delivered a full-scale web package that established and strengthened its digital presence—one that has continued to stand the test of time.',
@@ -184,6 +189,7 @@ const defaultProjects: Project[] = [
     name: 'Zaba Therapy',
     year: '2023',
     type: 'Web Design & Strategy',
+    category: 'ABA Therapy',
     detail: {
       description:
         'Zaba Therapy is an evidenced based ABA therapy team led by Dr. Thomas Zwicker, who provide services for parents and their children with autism across home, center, and school settings.',
@@ -269,13 +275,20 @@ export default function SelectedWork({
                     aria-label={`View ${project.name} case study, ${project.year}, ${project.type}`}
                   >
                     <div className="flex-1 grid grid-cols-12 gap-4 items-baseline">
-                      <span
-                        className={`col-span-12 sm:col-span-6 lg:col-span-7 text-2xl md:text-3xl lg:text-5xl font-semibold tracking-tight transition-colors duration-300 ${
-                          isHovered ? 'text-[#0052FF]' : 'text-gray-900'
-                        }`}
-                      >
-                        {project.name}
-                      </span>
+                      <div className="col-span-12 sm:col-span-6 lg:col-span-7 flex flex-col gap-1">
+                        <span
+                          className={`text-2xl md:text-3xl lg:text-5xl font-semibold tracking-tight transition-colors duration-300 ${
+                            isHovered ? 'text-[#0052FF]' : 'text-gray-900'
+                          }`}
+                        >
+                          {project.name}
+                        </span>
+                        {project.category && (
+                          <span className="text-sm text-gray-500">
+                            {project.category}
+                          </span>
+                        )}
+                      </div>
                       <span className="hidden sm:block sm:col-span-2 lg:col-span-2 text-sm text-gray-500 font-medium tabular-nums">
                         {project.year}
                       </span>
