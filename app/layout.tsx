@@ -10,9 +10,13 @@
 
 import type { Metadata, Viewport } from 'next';
 import { Nunito } from 'next/font/google';
+import Script from 'next/script';
 import Navbar from '@/components/Navbar';
 import TalonChat from '@/components/chat/TalonChat';
 import './globals.css';
+
+// Google Tag Manager container ID
+const GTM_ID = 'GTM-52SJQJGM';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -83,7 +87,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`scroll-smooth scroll-pt-20 lg:scroll-pt-24 ${nunito.variable}`}>
+      <head>
+        {/* Google Tag Manager */}
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GTM_ID}');`}
+        </Script>
+        {/* End Google Tag Manager */}
+      </head>
       <body className={`${nunito.className} antialiased bg-white text-gray-900`}>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
         <Navbar />
         {children}
         <TalonChat />
