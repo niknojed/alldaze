@@ -4,11 +4,16 @@ import React, { useState } from 'react';
 import { ArrowUpRight, Mail, MapPin, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import SectionHeader from './SectionHeader';
 
+declare global {
+  interface Window {
+    // Populated by the Google Tag Manager snippet in app/layout.tsx
+    dataLayer?: Record<string, unknown>[];
+  }
+}
+
 interface ContactProps {
   /** Public-facing email shown in the sidebar — server-side recipient is set via env var */
   contactEmail?: string;
-  /** Project type options shown in the dropdown */
-  projectTypes?: string[];
 }
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -16,8 +21,8 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 interface FormState {
   name: string;
   email: string;
-  projectType: string;
-  message: string;
+  business: string;
+  goal: string;
   /** Honeypot field — bots fill this in, real users won't see it */
   website: string;
 }
@@ -25,22 +30,13 @@ interface FormState {
 const initialForm: FormState = {
   name: '',
   email: '',
-  projectType: '',
-  message: '',
+  business: '',
+  goal: '',
   website: '',
 };
 
-const defaultProjectTypes = [
-  'Web Design',
-  'UX Strategy',
-  'Digital Marketing',
-  'Google Ads & SEO',
-  'Something else',
-];
-
 export default function Contact({
   contactEmail = 'design@alldazework.com',
-  projectTypes = defaultProjectTypes,
 }: ContactProps) {
   const [form, setForm] = useState<FormState>(initialForm);
   const [status, setStatus] = useState<FormStatus>('idle');
@@ -60,7 +56,7 @@ export default function Contact({
     setErrorMessage('');
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/api/audit-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -70,6 +66,11 @@ export default function Contact({
         const data = await response.json().catch(() => ({}));
         throw new Error(data.error ?? 'Something went wrong. Please try again.');
       }
+
+      // GA4 conversion event — fires only on a genuinely successful submission.
+      // Pair with a GTM "Custom Event" trigger (event = audit_form_submit).
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'audit_form_submit' });
 
       setStatus('success');
       setForm(initialForm);
@@ -91,8 +92,8 @@ export default function Contact({
     >
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
         <SectionHeader
-          heading="Let's build something good."
-          description="Tell us what you're working on. We'll get back within a business day — usually faster."
+          heading="Get a free website audit."
+          description="Tell us about your business and what you're aiming for. We'll take a look and send back a few honest, specific ways to improve — within a business day."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
@@ -139,6 +140,7 @@ export default function Contact({
               <SuccessState onReset={() => setStatus('idle')} />
             ) : (
               <form
+                id="audit-form"
                 onSubmit={handleSubmit}
                 className="bg-white border border-gray-200 rounded-2xl p-6 lg:p-10 flex flex-col gap-6"
                 noValidate
@@ -180,40 +182,29 @@ export default function Contact({
                   />
                 </div>
 
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="projectType" className="text-sm font-semibold text-gray-900">
-                    Project type
-                  </label>
-                  <select
-                    id="projectType"
-                    name="projectType"
-                    value={form.projectType}
-                    onChange={handleChange}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0052FF] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-white"
-                  >
-                    <option value="">Select a type (optional)</option>
-                    {projectTypes.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <Field
+                  label="Business"
+                  name="business"
+                  type="text"
+                  value={form.business}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
+                  autoComplete="organization"
+                  placeholder="Your business or brand name"
+                />
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="message" className="text-sm font-semibold text-gray-900">
-                    Tell us about your project <span className="text-[#0052FF]">*</span>
+                  <label htmlFor="goal" className="text-sm font-semibold text-gray-900">
+                    What's your goal?
                   </label>
                   <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={6}
-                    value={form.message}
+                    id="goal"
+                    name="goal"
+                    rows={5}
+                    value={form.goal}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    placeholder="What are you building? What's the timeline? What does success look like? A few sentences is plenty to get us started."
+                    placeholder="What are you hoping to improve? More bookings, a fresh look, better search ranking, faster site… a sentence or two is plenty."
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0052FF] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed resize-y placeholder:text-gray-400"
                   />
                 </div>
@@ -230,7 +221,7 @@ export default function Contact({
 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
                   <p className="text-xs text-gray-500">
-                    We'll only use your email to reply to this message.
+                    We'll only use your email to send your audit and reply.
                   </p>
                   <button
                     type="submit"
@@ -244,7 +235,7 @@ export default function Contact({
                       </>
                     ) : (
                       <>
-                        Send message
+                        Request my audit
                         <ArrowUpRight
                           size={16}
                           className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -274,6 +265,7 @@ interface FieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   autoComplete?: string;
+  placeholder?: string;
 }
 
 function Field({
@@ -285,6 +277,7 @@ function Field({
   onChange,
   disabled,
   autoComplete,
+  placeholder,
 }: FieldProps) {
   return (
     <div className="flex flex-col gap-2">
@@ -301,6 +294,7 @@ function Field({
         onChange={onChange}
         disabled={disabled}
         autoComplete={autoComplete}
+        placeholder={placeholder}
         className="w-full px-4 py-3 border border-gray-200 rounded-xl text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0052FF] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-gray-400"
       />
     </div>
@@ -318,17 +312,17 @@ function SuccessState({ onReset }: { onReset: () => void }) {
         <CheckCircle2 size={32} className="text-emerald-600" aria-hidden="true" />
       </div>
       <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
-        Got it — message received.
+        Got it — your audit request is in.
       </h3>
       <p className="text-base text-gray-600 max-w-md mb-8">
-        Thanks for reaching out. One of us will get back to you within a business day, usually sooner. Talk soon.
+        Thanks for reaching out. We'll review things and get back to you within a business day, usually sooner. Talk soon.
       </p>
       <button
         type="button"
         onClick={onReset}
         className="text-sm font-semibold text-[#0052FF] hover:text-[#003ECC] transition-colors"
       >
-        Send another message
+        Send another request
       </button>
     </div>
   );
