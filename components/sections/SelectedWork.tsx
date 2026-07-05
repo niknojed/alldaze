@@ -54,7 +54,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         "Pure Upscale Hair Studio is a beloved barbershop & community staple owned by lead barber, Corey Cooper, and located in East Atlanta Village. Our collaboration over the years has produced effective digital services & solutions for the brand's website & booking experience — by focusing on what truly matters.",
-      heroImage: '/PureUpscale.png',
+      heroImage: '/PureUpscale.jpg',
       heroImageAlt:
         'Inside Pure Upscale Hair Studio — barber tools and equipment laid out on the workstation',
       objective:
@@ -164,7 +164,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         'Roswell Barbell is a North Atlanta staple and strength training team & facility centered in the heart of Roswell & Alpharetta. Our partnership began with the brand’s inception, where we led and delivered a full-scale web package that established and strengthened its digital presence—one that has continued to stand the test of time.',
-      heroImage: '/RoswellBarbell.png',
+      heroImage: '/RoswellBarbell.jpg',
       heroImageAlt:
         'A coach spotting a lifter during a dumbbell bench press on the training floor at Roswell Barbell',
       objective:
@@ -193,7 +193,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         'Zaba Therapy is an evidenced based ABA therapy team led by Dr. Thomas Zwicker, who provide services for parents and their children with autism across home, center, and school settings.',
-      heroImage: '/ZabaTherapy.png',
+      heroImage: '/ZabaTherapy.jpg',
       heroImageAlt:
         'A father and child painting together on a large canvas in an art studio',
       objective:
