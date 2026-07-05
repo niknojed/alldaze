@@ -11,8 +11,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Nunito } from 'next/font/google';
 import Script from 'next/script';
-import Navbar from '@/components/Navbar';
-import TalonChat from '@/components/chat/TalonChat';
 import './globals.css';
 
 // Google Tag Manager container ID
@@ -109,9 +107,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        <Navbar />
         {children}
-        <TalonChat />
       </body>
     </html>
   );

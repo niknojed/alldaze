@@ -10,6 +10,18 @@ module.exports = {
       fontFamily: {
         nunito: ['var(--font-nunito)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
+      // Landing-page design tokens (from the alldaze-landing-v2 prototype).
+      colors: {
+        ink: '#111213',
+        body: '#3A3C3E',
+        muted: '#6E7175',
+        line: '#E6E8EA',
+        soft: '#F6F7F8',
+        brand: {
+          DEFAULT: '#0052FF',
+          dark: '#0041CC',
+        },
+      },
       animation: {
         'modal-fade': 'modal-fade 200ms ease-out',
         'modal-scale': 'modal-scale 300ms cubic-bezier(0.16, 1, 0.3, 1)',
