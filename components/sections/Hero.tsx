@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import StatusCard from '@/components/StatusCard';
 
 interface CurrentlyItem {
   label: string;
@@ -85,52 +86,12 @@ export default function Hero({
           </div>
 
           {/* "Currently" calling card */}
-          <aside className="lg:col-span-4" aria-label="Studio status card">
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col gap-5">
-              <ul className="space-y-0" role="list">
-                {currentlyItems.map((item, i) => (
-                  <li
-                    key={item.label}
-                    className={`flex items-baseline justify-between gap-4 py-3 ${
-                      i < currentlyItems.length - 1 ? 'border-b border-gray-100' : ''
-                    }`}
-                  >
-                    <span className="text-xs text-gray-500 uppercase tracking-wider flex-shrink-0">
-                      {item.label}
-                    </span>
-                    <span className="text-sm font-semibold text-gray-900 text-right">
-                      {item.value}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="pt-3 mt-1 border-t border-gray-100 flex items-center gap-4">
-                <a
-                  href="#why-us"
-                  aria-label="Meet the team"
-                  className="group relative block w-1/2 flex-shrink-0 rounded-xl hover:z-20 focus:outline-none focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-[#0052FF] focus-visible:ring-offset-2"
-                >
-                  <img
-                    src="/design-duo.png"
-                    alt="The AllDazeWork design studio — meet the team"
-                    className="w-full h-auto rounded-xl object-cover border border-gray-100 origin-bottom-left transition-transform duration-300 ease-out group-hover:scale-[1.6] group-hover:border-[#0052FF] group-hover:shadow-2xl group-focus-visible:scale-[1.6] motion-reduce:transform-none"
-                  />
-                </a>
-                <a
-                  href="#contact"
-                  className="group inline-flex items-center gap-1.5 text-sm font-semibold text-gray-900 hover:text-[#0052FF] transition-colors"
-                >
-                  Say hi
-                  <ArrowUpRight
-                    size={14}
-                    className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    aria-hidden="true"
-                  />
-                </a>
-              </div>
-            </div>
-          </aside>
+          <StatusCard
+            items={currentlyItems}
+            imageHref="#why-us"
+            sayHiHref="#contact"
+            className="lg:col-span-4"
+          />
         </div>
       </div>
     </section>

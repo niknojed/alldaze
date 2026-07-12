@@ -110,7 +110,11 @@ export default function AuditForm() {
             <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-        <p className="text-[1.05rem] font-semibold text-ink">Sent — check your inbox soon</p>
+        <p className="text-[1.05rem] font-semibold text-ink">Sent — Check your inbox soon</p>
+        <p className="mt-2 max-w-[42ch] text-[.95rem] text-body">
+          Thanks for reaching out. We&apos;ll review things and get back to you within a few
+          business days. Talk soon.
+        </p>
       </div>
     );
   }
@@ -213,7 +217,7 @@ export default function AuditForm() {
         disabled={isSubmitting}
         className="mt-1 inline-flex w-full items-center justify-center gap-[.5em] rounded-lg border border-transparent bg-brand px-[1.4em] py-[.85em] text-[.95rem] font-semibold text-white transition-colors duration-[250ms] ease-[cubic-bezier(.25,.6,.3,1)] hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
       >
-        {isSubmitting ? 'Sending…' : 'Request my audit'}
+        {isSubmitting ? 'Sending…' : "Let's Work"}
       </button>
 
       <p className="mt-3 text-center text-[.78rem] text-muted">

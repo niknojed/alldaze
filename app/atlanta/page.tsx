@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/landing/Reveal';
 import AuditForm from '@/components/landing/AuditForm';
+import StatusCard from '@/components/StatusCard';
+import FaqAccordion from '@/components/landing/FaqAccordion';
 
 export const metadata: Metadata = {
   title: {
@@ -59,16 +61,28 @@ const cases = [
     name: 'CV Home & Lawn',
     meta: 'Home & lawn service · 2025',
     body: 'Brand identity, a new website, and a local presence built to turn searches into service calls.',
+    image: '/cv-home-lawn.png',
+    imageAlt: 'CV Home & Lawn brand identity and website',
+    logo: '/CVLogo.png',
+    logoAlt: 'CV Home & Lawn logo',
   },
   {
     name: 'Roswell Barbell',
     meta: 'Fitness gym · 2023',
     body: 'Web and brand for a local gym that needed to look as serious as the people training in it.',
+    image: '/RoswellBarbell.jpg',
+    imageAlt: 'Roswell Barbell brand identity and website',
+    logo: '/RBBLogo.png',
+    logoAlt: 'Roswell Barbell logo',
   },
   {
     name: 'Pure Upscale Hair Studio',
     meta: 'Barber shop · 2024',
     body: 'Brand and web design that match the experience clients get in the chair, with easy booking.',
+    image: '/PureUpscale.png',
+    imageAlt: 'Pure Upscale Hair Studio brand identity and website',
+    logo: '/PureUpscaleLogo.png',
+    logoAlt: 'Pure Upscale Hair Studio logo',
   },
 ];
 
@@ -96,12 +110,12 @@ const steps = [
   {
     n: 'Step 2',
     title: 'We take a look',
-    body: 'You get back a few honest, specific ways to improve — within a business day.',
+    body: 'You get back a few honest, specific ways to improve — within a few business days.',
   },
   {
     n: 'Step 3',
-    title: 'A quick call, if you want',
-    body: 'Thirty minutes to talk it through. Only if the audit lands and you want more.',
+    title: 'Schedule a quick call',
+    body: '30 minute design kickoff to meet the team and discuss the next action.',
   },
   {
     n: 'Step 4',
@@ -150,7 +164,7 @@ const faqs = [
   },
   {
     q: 'How do we get started?',
-    a: "Send us your site through the form below. We'll send your audit within a business day, and if it's a fit, we'll set up a quick call.",
+    a: "Send us your site through the form below. We'll send your audit within a few business days, and if it's a fit, we'll set up a quick call.",
     open: false,
   },
 ];
@@ -161,17 +175,14 @@ export default function AtlantaLandingPage() {
       {/* ── Header ── */}
       <header className="sticky top-0 z-20 border-b border-line bg-white/90 backdrop-blur-[8px]">
         <div className={`${WRAP} flex items-center justify-between py-[14px]`}>
-          <a
-            href="#top"
-            className="text-[1.05rem] font-bold tracking-[-.02em] text-ink no-underline"
-          >
-            AllDaze<span className="text-brand">Work</span>
+          <a href="#top" className="flex items-center no-underline" aria-label="AllDazeWork — home">
+            <img src="/alldaze-logo.svg" alt="AllDazeWork" className="h-7 w-auto" />
           </a>
           <a
             href="#audit"
             className={`${BTN_BLUE} px-[1.1em] py-[.6em] text-[.86rem]`}
           >
-            Get a free audit
+            Collab
           </a>
         </div>
       </header>
@@ -179,36 +190,34 @@ export default function AtlantaLandingPage() {
       {/* ── Hero ── */}
       <section id="top" className="pt-[clamp(56px,9vw,110px)] pb-[clamp(56px,8vw,104px)]">
         <div className={WRAP}>
-          <div className="mb-[14px] text-[.8rem] font-semibold tracking-[.02em] text-brand">
-            Web design for Atlanta businesses
-          </div>
-          <h1 className="mb-5 max-w-[16ch] text-[clamp(2.3rem,5.6vw,4rem)] font-semibold leading-[1.12] tracking-[-.022em] text-ink">
-            A website that gets your business{' '}
-            <em className="not-italic text-brand">found and booked</em>.
-          </h1>
-          <p className="max-w-[56ch] text-[clamp(1.02rem,1.5vw,1.18rem)] text-body">
-            We&apos;re a small Atlanta studio. We design and build websites for local
-            businesses, and you work directly with us the whole way. Start with a free
-            audit of the site you have now.
-          </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <a href="#audit" className={BTN_BLUE}>
-              Get my free audit
-            </a>
-            <a href="#work" className={BTN_LINE}>
-              See our local work
-            </a>
-          </div>
-          <div className="mt-[34px] flex flex-wrap gap-x-[22px] gap-y-2">
-            <span className="text-[.82rem] text-muted">
-              Based in<b className="ml-[.35em] font-semibold text-ink">Atlanta, GA</b>
-            </span>
-            <span className="text-[.82rem] text-muted">
-              Booking<b className="ml-[.35em] font-semibold text-ink">Summer 2026</b>
-            </span>
-            <span className="text-[.82rem] text-muted">
-              Est.<b className="ml-[.35em] font-semibold text-ink">2022</b>
-            </span>
+          <div className="grid grid-cols-1 items-end gap-10 min-[820px]:grid-cols-12 min-[820px]:gap-12">
+            <div className="min-[820px]:col-span-8">
+              <div className="mb-[14px] text-[.8rem] font-semibold tracking-[.02em] text-brand">
+                Web design for Atlanta businesses
+              </div>
+              <h1 className="mb-5 max-w-[16ch] text-[clamp(2.3rem,5.6vw,4rem)] font-semibold leading-[1.12] tracking-[-.022em] text-ink">
+                A website that gets your business{' '}
+                <em className="not-italic text-brand">found and booked</em>.
+              </h1>
+              <p className="max-w-[56ch] text-[clamp(1.02rem,1.5vw,1.18rem)] text-body">
+                We&apos;re a small Atlanta studio. We design and build websites for local
+                businesses, and you work directly with us the whole way. Start with a free
+                audit of the site you have now.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <a href="#audit" className={BTN_BLUE}>
+                  Let&apos;s work
+                </a>
+                <a href="#work" className={BTN_LINE}>
+                  See our local work
+                </a>
+              </div>
+            </div>
+            <StatusCard
+              imageHref="#work"
+              sayHiHref="#audit"
+              className="min-[820px]:col-span-4 min-[820px]:self-center"
+            />
           </div>
         </div>
       </section>
@@ -268,22 +277,26 @@ export default function AtlantaLandingPage() {
             {cases.map((c) => (
               <article
                 key={c.name}
-                className="overflow-hidden rounded-[10px] border border-line bg-white transition-colors duration-[250ms] ease-[cubic-bezier(.25,.6,.3,1)] hover:border-[#c9cdd2]"
+                className="rounded-[14px] border border-line bg-white p-3 shadow-[0_1px_2px_rgba(0,0,0,.04)] transition-colors duration-[250ms] ease-[cubic-bezier(.25,.6,.3,1)] hover:border-[#c9cdd2]"
               >
-                {/* Placeholder slot — replace with a real project image */}
-                <div className="grid h-[130px] place-items-center border-b border-line bg-soft text-[.78rem] text-muted">
-                  [ project image ]
-                </div>
-                <div className="p-5">
+                <img
+                  src={c.image}
+                  alt={c.imageAlt}
+                  className="aspect-[3/2] w-full rounded-[10px] bg-soft object-cover"
+                  loading="lazy"
+                />
+                <div className="px-2 pb-1 pt-4">
+                  <img
+                    src={c.logo}
+                    alt={c.logoAlt}
+                    className="mb-3 h-9 w-auto object-contain"
+                    loading="lazy"
+                  />
                   <h3 className="text-[1.05rem] font-semibold leading-[1.12] tracking-[-.022em] text-ink">
                     {c.name}
                   </h3>
                   <div className="mt-[.3em] mb-[.8em] text-[.78rem] text-muted">{c.meta}</div>
                   <p className="text-[.92rem] text-body">{c.body}</p>
-                  {/* Placeholder chip — replace with a real result */}
-                  <span className="mt-3 inline-block rounded-md border border-dashed border-brand px-[.8em] py-[.4em] text-[.8rem] font-semibold text-brand">
-                    Add real result here
-                  </span>
                 </div>
               </article>
             ))}
@@ -379,21 +392,7 @@ export default function AtlantaLandingPage() {
       <section className="pb-[clamp(56px,8vw,104px)]">
         <Reveal className={`${WRAP} max-w-[820px]`}>
           <h2 className={`${H2} mb-7`}>Questions we hear often.</h2>
-          {faqs.map((f) => (
-            <details
-              key={f.q}
-              open={f.open}
-              className="group border-t border-line [&:last-of-type]:border-b [&:last-of-type]:border-line"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-[1.02rem] font-semibold text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand [&::-webkit-details-marker]:hidden">
-                {f.q}
-                <span className="faq-plus text-brand transition-transform duration-[250ms] ease-[cubic-bezier(.25,.6,.3,1)]">
-                  +
-                </span>
-              </summary>
-              <p className="max-w-[64ch] pb-5 text-[.96rem] text-body">{f.a}</p>
-            </details>
-          ))}
+          <FaqAccordion faqs={faqs} />
         </Reveal>
       </section>
 
@@ -404,12 +403,12 @@ export default function AtlantaLandingPage() {
         >
           <div>
             <h2 className="text-[clamp(1.7rem,3.4vw,2.5rem)] font-semibold leading-[1.12] tracking-[-.022em] text-white">
-              Get a free website audit.
+              Let&apos;s take a closer look
             </h2>
             <p className="mt-[14px] max-w-[56ch] text-[clamp(1.02rem,1.5vw,1.18rem)] text-[#B9BCC0]">
               Tell us about your business and what you&apos;re aiming for. We&apos;ll take a
-              look and send back a few honest, specific ways to improve — within a business
-              day.
+              look and send back a few honest, specific ways to improve — within a few
+              business days.
             </p>
             <div className="mt-7 text-[.9rem] text-[#9DA1A6]">
               <b className="mb-[2px] block text-white">Prefer email?</b>

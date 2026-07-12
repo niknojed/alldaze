@@ -54,8 +54,8 @@ const defaultTeam: TeamMember[] = [
   {
     id: 'kameron',
     name: 'Kameron Adams',
-    role: 'Product Designer',
-    bio: 'A product designer focused on clarity — taking something complex and making it feel effortless to use.',
+    role: 'Product Designer (Marketing Focus)',
+    bio: "A product designer who's spent years turning user insight into interfaces that convert — now applying that same craft to landing pages, ad creative, campaigns, SEO, and analytics.",
     link: {
       url: 'https://kameronadams.design',
       label: 'View portfolio',

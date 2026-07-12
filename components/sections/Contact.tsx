@@ -92,7 +92,7 @@ export default function Contact({
     >
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
         <SectionHeader
-          heading="Get a free website audit."
+          heading="Let's take a closer look"
           description="Tell us about your business and what you're aiming for. We'll take a look and send back a few honest, specific ways to improve — within a business day."
         />
 
@@ -235,7 +235,7 @@ export default function Contact({
                       </>
                     ) : (
                       <>
-                        Request my audit
+                        Let&apos;s Work
                         <ArrowUpRight
                           size={16}
                           className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -312,10 +312,10 @@ function SuccessState({ onReset }: { onReset: () => void }) {
         <CheckCircle2 size={32} className="text-emerald-600" aria-hidden="true" />
       </div>
       <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
-        Got it — your audit request is in.
+        Sent — Check your inbox soon
       </h3>
       <p className="text-base text-gray-600 max-w-md mb-8">
-        Thanks for reaching out. We'll review things and get back to you within a business day, usually sooner. Talk soon.
+        Thanks for reaching out. We'll review things and get back to you within a few business days. Talk soon.
       </p>
       <button
         type="button"

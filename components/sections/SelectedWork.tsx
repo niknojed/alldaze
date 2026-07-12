@@ -54,7 +54,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         "Pure Upscale Hair Studio is a beloved barbershop & community staple owned by lead barber, Corey Cooper, and located in East Atlanta Village. Our collaboration over the years has produced effective digital services & solutions for the brand's website & booking experience — by focusing on what truly matters.",
-      heroImage: '/PureUpscale.jpg',
+      heroImage: '/PureUpscale.png',
       heroImageAlt:
         'Inside Pure Upscale Hair Studio — barber tools and equipment laid out on the workstation',
       objective:
@@ -84,7 +84,7 @@ const defaultProjects: Project[] = [
     detail: {
       description:
         "A Marietta lawn-care and handyman business that needed to look as dependable online as it is on the job. We built the brand, the site, and the local-search presence from the ground up.",
-      heroImage: '/cv-home_720.png',
+      heroImage: '/cv-home-lawn.png',
       heroImageAlt: 'CV Home & Lawn brand identity and website',
       objective:
         "Carlos had the skills and the reviews but no cohesive brand or web presence to turn local searches into booked jobs. He needed to look established — and be found when neighbors search for lawn care or a handyman.",
