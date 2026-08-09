@@ -16,6 +16,9 @@ import './globals.css';
 // Google Tag Manager container ID
 const GTM_ID = 'GTM-52SJQJGM';
 
+// Google Ads conversion tag ID
+const GOOGLE_ADS_ID = 'AW-18351416027';
+
 const nunito = Nunito({
   subsets: ['latin'],
   variable: '--font-nunito',
@@ -86,6 +89,21 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth scroll-pt-20 lg:scroll-pt-24 ${nunito.variable}`}>
       <head>
+        {/* Google tag (gtag.js) — Google Ads */}
+        <Script
+          id="google-tag-gtag-src"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag-gtag-config" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', '${GOOGLE_ADS_ID}');`}
+        </Script>
+        {/* End Google tag (gtag.js) */}
+
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
