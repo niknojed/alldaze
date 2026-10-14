@@ -162,48 +162,67 @@ export default function initFlight() {
   });
 
   /* ---------- Hero review tool ---------- */
+  // Sources for the quick review. Each fix states what it rests on and how
+  // strong that is. There is no score: fixes are ordered by the visitor's own
+  // answers, worst first, so we never present an invented number as a measure.
+  const SRC = {
+    google: { label: 'Google Business Profile Help: how local ranking works', kind: 'Google guidance', url: 'https://support.google.com/business/answer/7091' },
+    lindgaard: { label: 'Lindgaard et al., 2006 (Nature news summary)', kind: 'Peer-reviewed study', url: 'https://www.nature.com/news/2006/060109/full/news060109-13.html' },
+    deloitte: { label: 'Milliseconds Make Millions, Deloitte and 55 for Google, 2020', kind: 'Industry study, not peer reviewed', url: 'https://web.dev/case-studies/milliseconds-make-millions' },
+    brightlocal: { label: 'BrightLocal Local Consumer Review Survey, 2026', kind: 'Consumer survey, 1,002 US adults', url: 'https://www.brightlocal.com/learn/local-consumer-review-survey/' },
+    cbi: { label: 'CB Insights startup post-mortems, summarized by DigitalOcean', kind: 'Founder self-reports', url: 'https://www.digitalocean.com/resources/articles/top-reasons-startups-fail-and-how-to-avoid-them' },
+    ours: { label: 'How we run projects', kind: 'Our working rule, not a published standard', url: '' }
+  };
   const PATHS = {
     local: {
       label: 'Local business', goal: 'brand-web',
       questions: [
-        { w: .175, q: 'When someone lands on your website, what do they think first?',
+        { q: 'When someone lands on your website, what do they think first?',
           o: ['This place looks established and professional', 'Looks like a real local business', 'Not sure if they’re still open', 'Looks outdated'],
-          fix: ['Refresh the look so it matches your work', 'People judge whether to keep reading in the first few seconds. A site that looks dated costs you the call before they read a word.'] },
-        { w: .175, q: 'How fast can a visitor find your phone number, hours, and address?',
+          fix: { t: 'Make the first screen look current', why: 'People judge how a site looks in a fraction of a second, and that judgment tends to hold. The study measured visual appeal, not calls, so treat this as a first filter.', src: 'lindgaard',
+            check: 'Show your homepage to someone who doesn’t know you for five seconds. Ask what you do and whether you look open.' } },
+        { q: 'How fast can a visitor find your phone number, hours, and address?',
           o: ['On every page, one tap away', 'Easy to find in the usual places', 'Takes some searching', 'Customers ask us for it'],
-          fix: ['Put contact info on every page', 'Phone, hours, and address in the header and footer, with tap-to-call on phones.'] },
-        { w: .15, q: 'How does your site work on a phone?',
+          fix: { t: 'Put phone, hours, and address on every page', why: 'Google uses accurate hours and address to match you to nearby searches, and customers need them to act. We don’t know of a study that measures this alone; it’s standard practice.', src: 'google',
+            check: 'Open any page of your site on your phone. Can you call in one tap?' } },
+        { q: 'How does your site work on a phone?',
           o: ['Easy to browse, call, and book', 'Mostly works', 'Usable, but clunky', 'Hard to use, people complain'],
-          fix: ['Rebuild for the phone first', 'Most of your visitors are standing somewhere, holding a phone. Big tap targets, fast loads, and the call button always in reach.'] },
-        { w: .15, q: 'When people nearby search for what you do, do you show up?',
+          fix: { t: 'Make the phone version fast and easy to use', why: 'Across 37 retail and travel brands, mobile pages 0.1 seconds faster saw retail conversions rise 8.4%. Google paid for the study and it didn’t include local service businesses, so take the direction, not the number.', src: 'deloitte',
+            check: 'Run your homepage through pagespeed.web.dev and read the mobile results for real visitors.' } },
+        { q: 'When people nearby search for what you do, do you show up?',
           o: ['Yes, near the top', 'Usually on the first page', 'Sometimes', 'Rarely or never'],
-          fix: ['Get found by nearby customers', 'A complete Google Business Profile with photos, hours, and reviews, plus a page for each service you offer.'] },
-        { w: .25, q: 'What usually happens after someone visits your site?',
+          fix: { t: 'Complete your Google Business Profile', why: 'Google says local results come down to relevance, distance, and prominence. The parts you control: complete information, current hours, reviews and replies, and photos.', src: 'google',
+            check: 'Search your service and your town on your phone. Are you in the top three on the map?' } },
+        { q: 'What usually happens after someone visits your site?',
           o: ['They call, book, or ask for a quote', 'Some reach out', 'Most look and leave', 'Almost no one reaches out'],
-          fix: ['Give every page one clear next step', 'Call, book, or get a quote, placed where the decision happens. Then track which pages bring in the calls.'] }
-      ],
-      bands: ['Your site is doing its job. The next gains come from ads and reviews.', 'A solid base with a few clear wins left on the table.', 'Real gaps are sending customers to competitors.', 'Start with the basics. Fixing these brings the fastest return.']
+          fix: { t: 'Give every page one next step, and count it', why: 'Recent reviews shape whether people reach out: 74% look for reviews from the last three months. If you don’t count calls and form requests, you can’t tell which pages earn them.', src: 'brightlocal',
+            check: 'How many calls and form requests came from your site last month? If you can’t say, start there.' } }
+      ]
     },
     launch: {
       label: 'Product launch', goal: 'product',
       questions: [
-        { w: .24, q: 'How have you tested the idea with real people?',
+        { q: 'How have you tested the idea with real people?',
           o: ['Interviews and a prototype test', 'A survey or a few conversations', 'Feedback from friends and family', 'Not yet'],
-          fix: ['Test it before you build it', 'Five short interviews and one clickable prototype will tell you more than months of building on a guess.'] },
-        { w: .2, q: 'Can you explain the problem in one sentence a stranger gets?',
+          fix: { t: 'Talk to people who have the problem', why: 'Founders most often name “no market need” when explaining why a startup failed. Those are self-reports after the fact, so read it as a pattern, not a measurement.', src: 'cbi',
+            check: 'Ask a few people with the problem how they handle it today, without pitching. Note what they already pay for.' } },
+        { q: 'Can you explain the problem in one sentence a stranger gets?',
           o: ['Yes, and people nod right away', 'Mostly, it takes a follow-up', 'It takes a few minutes', 'Still working that out'],
-          fix: ['Tighten the problem to one sentence', 'Your name, your site, and your pitch all hang on it. If a stranger can’t repeat it back, nothing downstream will land.'] },
-        { w: .2, q: 'How defined is your first version?',
+          fix: { t: 'Get the problem down to one sentence', why: 'Your name, your site, and your first ads all depend on it.', src: 'ours',
+            check: 'Say it to someone outside your field and ask them to repeat it back.' } },
+        { q: 'How defined is your first version?',
           o: ['Scoped to the one flow that proves it', 'A prioritized feature list', 'A long list of features', 'It’s mostly in my head'],
-          fix: ['Cut version one to a single flow', 'Pick the one path that proves people want this. Everything else waits for version two.'] },
-        { w: .16, q: 'Do you know who your first 100 users are?',
+          fix: { t: 'Cut version one to a single flow', why: 'A smaller first build ships sooner and tells you sooner whether people use it.', src: 'ours',
+            check: 'Name the one thing a user must finish for the product to prove itself.' } },
+        { q: 'Do you know who your first 100 users are?',
           o: ['By name, and where to reach them', 'We know the type of person', 'A general audience', 'Not yet'],
-          fix: ['Name your first 100 users', 'Know where they spend time before launch day, so the launch has somewhere to land.'] },
-        { w: .2, q: 'What could you show an investor or partner today?',
+          fix: { t: 'Know where your first users are', why: 'A launch needs somewhere to land. Knowing where early users spend time decides what you build for launch day.', src: 'ours',
+            check: 'Write down where 20 of them spend time, online or in person.' } },
+        { q: 'What could you show an investor or partner today?',
           o: ['A tested, clickable prototype', 'Designed screens', 'A pitch deck', 'Nothing visual yet'],
-          fix: ['Make the idea something people can touch', 'A clickable prototype turns a pitch into a demo, for users and for investors.'] }
-      ],
-      bands: ['You’re ready to build. Keep testing as you go.', 'A strong start with a couple of risky gaps to close first.', 'Some big assumptions are still untested.', 'Validate before you spend on building.']
+          fix: { t: 'Make something people can try', why: 'Reactions to something people can click are easier to read than reactions to a description.', src: 'ours',
+            check: 'Can someone use what you have without you explaining it?' } }
+      ]
     }
   };
   const TOOL_KEY = 'adw-review';
@@ -213,15 +232,18 @@ export default function initFlight() {
   const toolBody = document.getElementById('toolBody'), toolStep = document.getElementById('toolStep'), toolBack = document.getElementById('toolBack'), toolFill = document.getElementById('toolFill');
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  function scoreOf(path, answers) {
-    // answers are option indexes 0..3 (0 best); convert to 1..0 and weight
-    return Math.round(PATHS[path].questions.reduce((s, q, k) => s + q.w * ((3 - (answers[k] ?? 3)) / 3), 0) * 100);
-  }
-  function bandIndex(score) { return score >= 85 ? 0 : score >= 70 ? 1 : score >= 50 ? 2 : 3; }
+  // Worst answers first; ties keep question order. No weights, no score.
   function topFixes(path, answers) {
     const qs = PATHS[path].questions;
-    return qs.map((q, k) => ({ k, gap: (answers[k] ?? 3) * q.w, ans: answers[k] ?? 3 }))
-      .filter(x => x.ans > 0).sort((a, b) => b.gap - a.gap).slice(0, 3).map(x => qs[x.k].fix);
+    return qs.map((q, k) => ({ k, ans: answers[k] ?? 3 }))
+      .filter(x => x.ans > 0).sort((a, b) => b.ans - a.ans || a.k - b.k).slice(0, 3).map(x => qs[x.k].fix);
+  }
+  function fixHTML(f) {
+    const src = SRC[f.src];
+    const cite = src.url
+      ? `<a href="${src.url}" target="_blank" rel="noopener">${esc(src.label)}<span class="sr"> (opens in a new tab)</span></a>`
+      : esc(src.label);
+    return `<li><span><b>${esc(f.t)}</b>${esc(f.why)}<span class="fix-check"><em>Check it yourself:</em> ${esc(f.check)}</span><span class="fix-src">${esc(src.kind)} · ${cite}</span></span></li>`;
   }
   function focusHead() { const h = toolBody.querySelector('h2'); if (h && !reduced) h.focus({ preventScroll: true }); else if (h) h.focus({ preventScroll: true }); }
 
@@ -244,17 +266,18 @@ export default function initFlight() {
         <div class="opts" role="group" aria-labelledby="tool-q">${q.o.map((t, k) =>
           `<button type="button" class="opt" data-a="${k}" aria-pressed="${T.answers[T.i] === k}"><span class="k" aria-hidden="true">${k + 1}</span>${esc(t)}</button>`).join('')}</div>`;
     } else {
-      const score = scoreOf(T.path, T.answers), b = bandIndex(score), fixes = topFixes(T.path, T.answers);
+      const fixes = topFixes(T.path, T.answers);
       toolFill.style.width = '100%';
-      toolStep.textContent = `${P.label} · your read`;
-      toolBody.innerHTML = `<h2 id="tool-q" tabindex="-1" class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your result</h2>
-        <div class="res-score"><strong>${score}</strong><span>/ 100</span></div>
-        <div class="meter" aria-hidden="true"><i style="width:${reduced ? score : 0}%"></i></div>
-        <p class="res-band">${esc(P.bands[b])}</p>
-        ${fixes.length ? `<p class="res-desc">Fix these first:</p><ol class="fixes">${fixes.map(f => `<li><span><b>${esc(f[0])}</b>${esc(f[1])}</span></li>`).join('')}</ol>`
-          : `<p class="res-desc">Every answer came back strong. Let's talk about what's next.</p>`}
-        <div class="res-actions"><button type="button" class="btn btn-ink" id="toolSend">Get a plan for these</button><button type="button" class="btn btn-line-ink" id="toolTalon">Ask Talon about this</button><button type="button" class="link-btn" id="toolRestart">Start over</button></div>`;
-      if (!reduced) requestAnimationFrame(() => requestAnimationFrame(() => { const m = toolBody.querySelector('.meter i'); if (m) m.style.width = score + '%'; }));
+      toolStep.textContent = `${P.label} · your result`;
+      toolBody.innerHTML = fixes.length
+        ? `<h2 id="tool-q" tabindex="-1" class="res-h">What to fix first</h2>
+        <p class="res-desc">Ordered by your answers, weakest first. Each one says what it’s based on.</p>
+        <ol class="fixes">${fixes.map(fixHTML).join('')}</ol>
+        <div class="res-actions"><button type="button" class="btn btn-ink" id="toolSend">Get a plan for these</button><button type="button" class="btn btn-line-ink" id="toolTalon">Ask Talon about this</button><button type="button" class="link-btn" id="toolRestart">Start over</button></div>`
+        : `<h2 id="tool-q" tabindex="-1" class="res-h">Your answers came back strong</h2>
+        <p class="res-desc">That’s your read of it. Checking against real data is the next step:</p>
+        <ol class="fixes">${P.questions.slice(0, 3).map(q => fixHTML(q.fix)).join('')}</ol>
+        <div class="res-actions"><button type="button" class="btn btn-ink" id="toolSend">Talk about what’s next</button><button type="button" class="btn btn-line-ink" id="toolTalon">Ask Talon about this</button><button type="button" class="link-btn" id="toolRestart">Start over</button></div>`;
     }
     if (moveFocus) focusHead();
   }
@@ -272,9 +295,9 @@ export default function initFlight() {
     if (e.target.id === 'toolRestart') { T.path = null; T.i = 0; T.answers = []; saveT(); renderTool(true); return; }
     if (e.target.id === 'toolTalon') { window.__talonFromReview(); return; }
     if (e.target.id === 'toolSend') {
-      const P = PATHS[T.path], score = scoreOf(T.path, T.answers), fixes = topFixes(T.path, T.answers);
+      const P = PATHS[T.path], fixes = topFixes(T.path, T.answers);
       F.goal.value = P.goal;
-      if (!F.message.value.trim()) F.message.value = `From the quick review (${P.label}): ${score}/100.` + (fixes.length ? ` Top areas: ${fixes.map(f => f[0].toLowerCase()).join('; ')}.` : '');
+      if (!F.message.value.trim()) F.message.value = `From the quick review (${P.label}).` + (fixes.length ? ` Top areas: ${fixes.map(f => f.t.toLowerCase()).join('; ')}.` : '');
       form.dispatchEvent(new Event('input'));
       document.getElementById('contact').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
       setTimeout(() => F.name.focus({ preventScroll: true }), reduced ? 0 : 600);
@@ -407,10 +430,10 @@ export default function initFlight() {
   // hide the dock while the hero tool is on screen so it never covers the review
   if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => { if (talonEl.hidden) dock.classList.toggle('hide', en.isIntersecting && innerWidth < 1060); }, { threshold: .25 }).observe(document.getElementById('tool'));
   window.__talonFromReview = () => {
-    const P = PATHS[T.path], score = scoreOf(T.path, T.answers), fixes = topFixes(T.path, T.answers);
-    tCtx = `Path: ${P.label}. Score ${score}/100. Answers: ${P.questions.map((q, k) => q.q + ' → ' + q.o[T.answers[k] ?? 3]).join(' | ')}. Top fixes: ${fixes.map(f => f[0]).join('; ') || 'none'}.`;
+    const P = PATHS[T.path], fixes = topFixes(T.path, T.answers);
+    tCtx = `Path: ${P.label}. Their answers: ${P.questions.map((q, k) => q.q + ' → ' + q.o[T.answers[k] ?? 3]).join(' | ')}. Fixes the page showed them: ${fixes.map(f => f.t).join('; ') || 'none'}. The review gives no score.`;
     tSave(); openTalon();
-    askTalon(`I scored ${score}/100 on the ${P.label.toLowerCase()} review. What should I do first?`);
+    askTalon(`I just took the ${P.label.toLowerCase()} review. What should I do first?`);
   };
 
   /* ---------- WebGL: shared noise ---------- */

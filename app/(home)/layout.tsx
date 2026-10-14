@@ -43,15 +43,13 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#BFD7FF' },
-    { media: '(prefers-color-scheme: dark)', color: '#0B1026' },
-  ],
+  themeColor: '#BFD7FF',
 };
 
-// Sets data-mode before first paint so the night sky never flashes day.
+// Sets data-mode before first paint. Day is the default for everyone; night
+// only applies when the visitor picked it with the toggle (saved in localStorage).
 const MODE_SCRIPT = `(function(){var m=null;try{m=localStorage.getItem('adw-mode')}catch(e){}
-if(m!=='day'&&m!=='night'){m=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day'}
+if(m!=='night'){m='day'}
 document.documentElement.setAttribute('data-mode',m);})();`;
 
 export default function HomeLayout({ children }: { children: React.ReactNode }) {
