@@ -23,7 +23,6 @@
   --ease:cubic-bezier(.2,.7,.1,1);
 }
 :root[data-mode="night"]{--paper:#0A0F1F;--cloud:#151C33;--surface:#10172C;--ink:#EEF2FA;--ink-2:#A9B3CA;--line:rgba(238,242,250,.12);--edge:#2C3757;--on-ink:#0A0F1F;--accent:#86A8FF;--navbg:rgba(10,15,31,.9);--err:#FFA48C;--err-bg:#2B1511;color-scheme:dark}
-@media (prefers-color-scheme: dark){:root:not([data-mode]){--paper:#0A0F1F;--cloud:#151C33;--surface:#10172C;--ink:#EEF2FA;--ink-2:#A9B3CA;--line:rgba(238,242,250,.12);--edge:#2C3757;--on-ink:#0A0F1F;--accent:#86A8FF;--navbg:rgba(10,15,31,.9);--err:#FFA48C;--err-bg:#2B1511;color-scheme:dark}}
 .phoenix{--ink:#15120F;--ink-2:#4B4A52;--line:rgba(21,18,15,.12);--on-ink:#FFFFFF;--accent:#0052FF;--surface:#FFFFFF;--edge:#CDD3DE;--cloud:#EEF3FA;color:var(--ink)}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
