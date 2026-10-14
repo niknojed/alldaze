@@ -1,23 +1,12 @@
 /**
- * REPLACES the existing app/layout.tsx.
- *
- * Changes from the previous version:
- *   1. Swapped Inter for Nunito (AllDazeWork brand font)
- *   2. Refined metadata to match the studio's current positioning
- *   3. Moved viewport into its own export (Next.js 14 convention)
- *   4. Added OpenGraph + Twitter metadata for link previews
+ * Root layout for landing pages (e.g. /atlanta). Uses Tailwind and Nunito.
+ * The homepage has its own root layout in app/(home).
  */
 
 import type { Metadata, Viewport } from 'next';
 import { Nunito } from 'next/font/google';
-import Script from 'next/script';
+import { AnalyticsBody, AnalyticsHead } from '@/components/Analytics';
 import './globals.css';
-
-// Google Tag Manager container ID
-const GTM_ID = 'GTM-52SJQJGM';
-
-// Google Ads conversion tag ID
-const GOOGLE_ADS_ID = 'AW-18351416027';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -89,42 +78,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth scroll-pt-20 lg:scroll-pt-24 ${nunito.variable}`}>
       <head>
-        {/* Google tag (gtag.js) — Google Ads */}
-        <Script
-          id="google-tag-gtag-src"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-tag-gtag-config" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-
-gtag('config', '${GOOGLE_ADS_ID}');`}
-        </Script>
-        {/* End Google tag (gtag.js) */}
-
-        {/* Google Tag Manager */}
-        <Script id="google-tag-manager" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`}
-        </Script>
-        {/* End Google Tag Manager */}
+        <AnalyticsHead />
       </head>
       <body className={`${nunito.className} antialiased bg-white text-gray-900`}>
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
-        {/* End Google Tag Manager (noscript) */}
+        <AnalyticsBody />
         {children}
       </body>
     </html>
