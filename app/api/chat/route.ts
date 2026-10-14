@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
-import { TALON_SYSTEM_PROMPT } from '@/lib/talon';
+import { talonSystemPrompt } from '@/lib/talon';
 
 /**
  * POST /api/chat
  *
- * Body: { messages: { role: 'user' | 'assistant', content: string }[] }
+ * Body: { messages: { role: 'user' | 'assistant', content: string }[], context?: string }
+ *   context — the visitor's quick-review result, if they took it
  * Returns: { reply: string }
  *
  * Keeps ANTHROPIC_API_KEY server-side. The browser never sees it.
@@ -39,7 +40,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: { messages?: IncomingMessage[] };
+  let body: { messages?: IncomingMessage[]; context?: unknown };
   try {
     body = await req.json();
   } catch {
@@ -70,6 +71,9 @@ export async function POST(req: NextRequest) {
       content: m.content.slice(0, MAX_CONTENT_LENGTH),
     }));
 
+  // The API requires the conversation to open with a user turn.
+  while (messages.length && messages[0].role !== 'user') messages.shift();
+
   if (messages.length === 0) {
     return NextResponse.json({ error: 'No valid messages provided.' }, { status: 400 });
   }
@@ -78,7 +82,7 @@ export async function POST(req: NextRequest) {
     const response = await anthropic.messages.create({
       model: MODEL,
       max_tokens: 1000,
-      system: TALON_SYSTEM_PROMPT,
+      system: talonSystemPrompt(typeof body.context === 'string' ? body.context : ''),
       messages,
     });
 
@@ -90,7 +94,7 @@ export async function POST(req: NextRequest) {
 
     if (!reply) {
       return NextResponse.json(
-        { error: 'Talon lost the thermal for a second. Try that again?' },
+        { error: 'Talon didn’t answer. Try that again?' },
         { status: 502 }
       );
     }
@@ -99,7 +103,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('[chat] Anthropic request failed:', err);
     return NextResponse.json(
-      { error: 'Talon hit some turbulence. Try again in a moment, or email design@alldazework.com.' },
+      { error: 'Talon couldn’t answer just now. Try again in a moment, or email design@alldazework.com.' },
       { status: 500 }
     );
   }
