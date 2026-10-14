@@ -4,6 +4,38 @@ export default function initFlight() {
   let reduced = RM.matches;
   const root = document.documentElement;
 
+  /* ---------- In-page navigation ----------
+     Sections carry generous top padding, so scrolling to the section box
+     leaves the heading far down the screen. Land on the section heading
+     instead, just under the fixed header. */
+  function goTo(id, focusHeading) {
+    const sec = document.getElementById(id);
+    if (!sec) return false;
+    const target = id === 'top' ? sec : (sec.querySelector('h2') || sec);
+    const nav = document.getElementById('nav');
+    const want = () => id === 'top' ? 0 : Math.max(0, target.getBoundingClientRect().top + scrollY - (nav ? nav.offsetHeight : 0) - 24);
+    scrollTo({ top: want(), behavior: reduced ? 'auto' : 'smooth' });
+    // Late content (fonts, images) can still move the target while we scroll.
+    // Once scrolling settles, correct up to twice without animating.
+    let tries = 0;
+    const settle = () => {
+      const d = want() - scrollY;
+      if (Math.abs(d) > 4 && tries++ < 2) { scrollTo({ top: want(), behavior: 'auto' }); setTimeout(settle, 120); }
+    };
+    if ('onscrollend' in window) addEventListener('scrollend', settle, { once: true });
+    else setTimeout(settle, reduced ? 50 : 900);
+    if (history.replaceState) history.replaceState(null, '', '#' + id);
+    if (focusHeading && target !== sec) { target.tabIndex = -1; target.focus({ preventScroll: true }); }
+    return true;
+  }
+  document.addEventListener('click', e => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || a.classList.contains('skip') || a.closest('#menu')) return;
+    const id = a.getAttribute('href').slice(1);
+    if (id && goTo(id, true)) e.preventDefault();
+  });
+
   /* ---------- AllDazeWork eagle mark (from alldaze-logo.svg) ---------- */
   const BODY = 'M212.988 3.14556L102.185 2.5694C102.185 2.5694 74.6902 7.18137 84.1276 50.4202C84.1276 50.4202 75.9201 51.5725 59.0951 30.8173C59.0951 30.8173 50.8876 18.7099 40.2176 26.2054C40.2176 26.2054 36.5251 5.45015 53.7601 2.56663L5.39234e-06 1.99048C5.39234e-06 1.99048 8.61746 26.2054 41.4475 49.8413C41.4475 49.8413 61.145 64.8323 87.4101 68.8653C87.4101 68.8653 126.805 75.2057 156.353 57.9102C156.353 57.9102 190.825 42.3431 212.985 3.14001L212.988 3.14556Z';
   const CUTS = [
@@ -79,8 +111,7 @@ export default function initFlight() {
   menuClose.addEventListener('click', () => closeMenu());
   menu.querySelectorAll('ol a').forEach(a => a.addEventListener('click', e => {
     e.preventDefault(); closeMenu(false);
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) { t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); const h = t.querySelector('h2'); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); } }
+    goTo(a.getAttribute('href').slice(1), true);
   }));
   menu.addEventListener('keydown', e => {
     if (e.key === 'Escape') { e.preventDefault(); closeMenu(); return; }
@@ -119,7 +150,11 @@ export default function initFlight() {
     set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch { /* unavailable */ } },
     clear() { try { localStorage.removeItem(KEY); } catch { /* unavailable */ } }
   };
-  const draft = store.get(); Object.entries(F).forEach(([k, el]) => { if (draft[k]) el.value = draft[k]; });
+  const REVIEW_PREFIX = 'From the quick review';
+  const draft = store.get();
+  // Drafts saved before Oct 2026 can hold the retired 0–100 score. Drop that text.
+  if (typeof draft.message === 'string' && draft.message.startsWith(REVIEW_PREFIX) && /\d+\/100/.test(draft.message)) { delete draft.message; store.set(draft); }
+  Object.entries(F).forEach(([k, el]) => { if (draft[k]) el.value = draft[k]; });
   const rules = {
     name: v => v.trim().length >= 2 ? '' : 'Add your name so we know who to reply to.',
     email: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Enter an email like you@business.com.',
@@ -297,9 +332,9 @@ export default function initFlight() {
     if (e.target.id === 'toolSend') {
       const P = PATHS[T.path], fixes = topFixes(T.path, T.answers);
       F.goal.value = P.goal;
-      if (!F.message.value.trim()) F.message.value = `From the quick review (${P.label}).` + (fixes.length ? ` Top areas: ${fixes.map(f => f.t.toLowerCase()).join('; ')}.` : '');
+      if (!F.message.value.trim() || F.message.value.startsWith(REVIEW_PREFIX)) F.message.value = `${REVIEW_PREFIX} (${P.label}).` + (fixes.length ? ` Top areas: ${fixes.map(f => f.t.toLowerCase()).join('; ')}.` : '');
       form.dispatchEvent(new Event('input'));
-      document.getElementById('contact').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      goTo('contact', false);
       setTimeout(() => F.name.focus({ preventScroll: true }), reduced ? 0 : 600);
     }
   });
@@ -413,10 +448,10 @@ export default function initFlight() {
     if (act === 'project') {
       const last = [...tMsgs].reverse().find(m => m.role === 'user');
       if (last && !F.message.value.trim()) { F.message.value = 'From my chat with Talon: ' + last.content.slice(0, 400); form.dispatchEvent(new Event('input')); }
-      document.getElementById('contact').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      goTo('contact', false);
       setTimeout(() => F.name.focus({ preventScroll: true }), reduced ? 0 : 600);
     } else if (act === 'review') {
-      document.getElementById('top').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      goTo('top', false);
       setTimeout(() => { const h = document.querySelector('#toolBody h2'); if (h) h.focus({ preventScroll: true }); }, reduced ? 0 : 600);
     }
   });
