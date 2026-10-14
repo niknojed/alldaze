@@ -23,7 +23,6 @@
   --ease:cubic-bezier(.2,.7,.1,1);
 }
 :root[data-mode="night"]{--paper:#0A0F1F;--cloud:#151C33;--surface:#10172C;--ink:#EEF2FA;--ink-2:#A9B3CA;--line:rgba(238,242,250,.12);--edge:#2C3757;--on-ink:#0A0F1F;--accent:#86A8FF;--navbg:rgba(10,15,31,.9);--err:#FFA48C;--err-bg:#2B1511;color-scheme:dark}
-@media (prefers-color-scheme: dark){:root:not([data-mode]){--paper:#0A0F1F;--cloud:#151C33;--surface:#10172C;--ink:#EEF2FA;--ink-2:#A9B3CA;--line:rgba(238,242,250,.12);--edge:#2C3757;--on-ink:#0A0F1F;--accent:#86A8FF;--navbg:rgba(10,15,31,.9);--err:#FFA48C;--err-bg:#2B1511;color-scheme:dark}}
 .phoenix{--ink:#15120F;--ink-2:#4B4A52;--line:rgba(21,18,15,.12);--on-ink:#FFFFFF;--accent:#0052FF;--surface:#FFFFFF;--edge:#CDD3DE;--cloud:#EEF3FA;color:var(--ink)}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -145,6 +144,13 @@ section{padding-block:clamp(5rem,11vw,9.5rem);scroll-margin-top:calc(env(safe-ar
 .fixes li{counter-increment:fx;display:grid;grid-template-columns:28px 1fr;gap:.6rem;font-size:1rem;line-height:1.4}
 .fixes li::before{content:counter(fx);width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--on-ink);display:grid;place-items:center;font-weight:800;font-size:.8rem}
 .fixes b{display:block}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.res-h{margin:0 0 .35rem;font-stretch:112%;font-weight:800;font-size:clamp(1.35rem,2.2vw,1.6rem);letter-spacing:-.02em;line-height:1.15}
+.fix-check{display:block;margin-top:.35rem}
+.fix-check em{font-style:normal;font-weight:700}
+.fix-src{display:block;margin-top:.35rem;font-size:.84rem;color:var(--ink-2)}
+.fix-src a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.fix-src a:hover{color:var(--ink)}
 .res-actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
 .res-actions .btn{min-height:48px}
 .link-btn{font:700 1rem/1 var(--f);background:none;border:0;color:var(--accent);cursor:pointer;padding:.6rem .3rem;text-decoration:underline;text-underline-offset:4px}
