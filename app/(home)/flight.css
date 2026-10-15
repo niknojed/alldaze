@@ -1,5 +1,7 @@
 
 /* Layout concept: open daylight sky. A cloud deck you rise above in the hero, bright solid surfaces for reading, a sunrise field where the phoenix (products) lives, brand blue bands for process and footer. One superfamily, set heavy and wide for statements. */
+img{max-width:100%;height:auto}
+
 :root{
   color-scheme: light;
   --blue:#0052FF;        /* heritage brand blue, kept as the anchor */
