@@ -634,4 +634,140 @@ export default function initFlight() {
   RM.addEventListener?.('change', e => { reduced = e.matches; scenes.forEach(s => s.needs = true); kick(); });
   if (document.fonts?.ready) document.fonts.ready.then(() => { measure(); scenes.forEach(s => { s.needsSize = true; s.needs = true; }); kick(); });
   measure(); updateScroll(); kick();
+
+  /* ---------- Hawk ---------- */
+  (function hawk() {
+  const hero = document.getElementById('top'), card = document.getElementById('tool');
+  if (!hero || !card || !document.getElementById('hawkGL')) return;
+  let heroOnScreen = true;
+  if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { heroOnScreen = e.isIntersecting; }).observe(hero);
+  /* ---------- hawk (3D) ----------
+     A low-poly red-tail in its own small three.js scene, layered between the sky
+     and the page. Depth comes from the scene itself: a perspective camera at eye
+     level, a real flight path in space, fog matched to the horizon for distance
+     haze, and hemisphere + sun light so the wings change tone as the bird banks.
+     It enters as a small, hazy bird far out, glides toward the viewer, then joins a
+     thermal circle under the card (beside the headline on phones).
+     Hidden at night and with reduced motion; paused when the hero is off screen. */
+  const PF = {"RA": [[3.0, -4.0], [11.73, -7.09], [20.81, -9.37], [30.12, -10.88], [39.52, -11.63], [48.86, -11.66], [58.0, -11.0], [60.99, -10.42], [63.93, -9.67], [66.75, -8.75], [69.41, -7.67], [71.84, -6.42], [74.0, -5.0], [76.0, 6.0], [70.69, 9.25], [64.81, 11.96], [58.5, 14.12], [51.85, 15.7], [44.98, 16.67], [38.0, 17.0], [32.01, 16.68], [26.07, 15.78], [20.25, 14.38], [14.59, 12.56], [9.16, 10.4], [4.0, 8.0]], "RF": [[[72.56, -0.85], [78.91, -1.95], [84.61, -3.15], [89.66, -4.46], [94.06, -5.87], [97.81, -7.38], [98.11, -7.9], [98.21, -8.39], [98.13, -8.84], [97.86, -9.26], [97.4, -9.65], [93.36, -9.79], [88.75, -9.61], [83.56, -9.11], [77.79, -8.29], [71.44, -7.15]], [[71.52, 1.5], [78.46, 1.28], [84.72, 0.86], [90.3, 0.24], [95.2, -0.58], [99.42, -1.59], [99.79, -2.08], [99.96, -2.56], [99.95, -3.03], [99.74, -3.5], [99.34, -3.96], [95.06, -4.68], [90.11, -5.15], [84.5, -5.38], [78.22, -5.36], [71.28, -5.1]], [[70.4, 3.68], [77.04, 4.51], [83.07, 5.05], [88.48, 5.29], [93.27, 5.23], [97.45, 4.87], [97.89, 4.45], [98.14, 4.0], [98.2, 3.53], [98.06, 3.03], [97.74, 2.51], [93.77, 1.15], [89.14, -0.07], [83.83, -1.14], [77.85, -2.08], [71.2, -2.88]], [[69.32, 5.68], [75.04, 7.34], [80.26, 8.63], [84.98, 9.56], [89.21, 10.12], [92.95, 10.32], [93.45, 9.99], [93.76, 9.6], [93.89, 9.15], [93.83, 8.66], [93.59, 8.11], [90.32, 6.3], [86.43, 4.53], [81.92, 2.81], [76.81, 1.14], [71.08, -0.48]], [[68.24, 7.59], [72.69, 9.78], [76.8, 11.57], [80.57, 12.97], [84.0, 13.97], [87.09, 14.57], [87.63, 14.34], [88.0, 14.02], [88.19, 13.62], [88.22, 13.13], [88.07, 12.56], [85.69, 10.5], [82.79, 8.41], [79.37, 6.3], [75.43, 4.17], [70.96, 2.01]], [[67.15, 9.36], [70.07, 11.67], [72.83, 13.59], [75.43, 15.14], [77.88, 16.3], [80.16, 17.09], [80.73, 16.98], [81.15, 16.76], [81.41, 16.42], [81.53, 15.96], [81.49, 15.38], [80.17, 13.36], [78.45, 11.27], [76.33, 9.12], [73.79, 6.91], [70.85, 4.64]]], "body": [[0.0, -13.0], [1.0, -12.8], [1.81, -12.26], [2.45, -11.44], [2.92, -10.41], [3.23, -9.24], [3.4, -8.0], [3.95, -5.92], [4.38, -3.67], [4.67, -1.25], [4.82, 1.33], [4.8, 4.08], [4.6, 7.0], [3.6, 10.0], [-3.6, 10.0], [-4.6, 7.0], [-4.8, 4.08], [-4.82, 1.33], [-4.67, -1.25], [-4.38, -3.67], [-3.95, -5.92], [-3.4, -8.0], [-3.23, -9.24], [-2.92, -10.41], [-2.45, -11.44], [-1.81, -12.26], [-1.0, -12.8], [0.0, -13.0]], "tail": [[-3.6, 9.0], [-5.22, 11.5], [-6.62, 14.0], [-7.76, 16.5], [-8.58, 19.0], [-9.01, 21.5], [-9.0, 24.0], [-6.28, 25.04], [-3.22, 25.67], [0.0, 25.88], [3.22, 25.67], [6.28, 25.04], [9.0, 24.0], [9.01, 21.5], [8.58, 19.0], [7.76, 16.5], [6.62, 14.0], [5.22, 11.5], [3.6, 9.0]]};
+  const canvas = document.getElementById('hawkGL');
+  let R3 = null;
+  function build() {
+    if (!window.THREE) return null;
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, premultipliedAlpha: true }); }
+    catch (e) { console.warn('hawk: WebGL unavailable', e); return null; }
+    renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0xcfe0f6, 26, 360);
+    const cam = new THREE.PerspectiveCamera(34, 1, .1, 2000);
+    cam.rotation.x = .6; // looking up ~34°: soaring birds are seen from below
+    cam.updateMatrixWorld();
+    scene.add(new THREE.HemisphereLight(0xeaf2ff, 0x5d6884, 1.05));
+    const sun = new THREE.DirectionalLight(0xfff1d6, .75); sun.position.set(6, 9, -4); scene.add(sun);
+    const mat = new THREE.MeshLambertMaterial({ color: 0x4a4038, side: THREE.DoubleSide });
+    const flat = (pts, mx, ox, oy) => {
+      const sh = new THREE.Shape();
+      pts.forEach(([x, y], i) => { const X = (x - ox) * mx, Y = y - oy; i ? sh.lineTo(X, Y) : sh.moveTo(X, Y); });
+      const g = new THREE.ShapeGeometry(sh); g.rotateX(-Math.PI / 2); // planform into XZ, head toward +z
+      return new THREE.Mesh(g, mat);
+    };
+    const bird = new THREE.Group();
+    const wing = mx => {
+      const arm = new THREE.Group(); arm.position.x = 3 * mx;            // shoulder pivot
+      arm.add(flat(PF.RA, mx, 3, 0));
+      const hand = new THREE.Group(); hand.position.x = (70 - 3) * mx;   // wrist pivot
+      PF.RF.forEach(f => hand.add(flat(f, mx, 70, 0)));
+      arm.add(hand);
+      return { arm, hand };
+    };
+    const R = wing(1), L = wing(-1);
+    bird.add(R.arm, L.arm);
+    bird.add(flat(PF.tail, 1, 0, 0));
+    const body = new THREE.Mesh(new THREE.SphereGeometry(1, 12, 8), mat);
+    body.scale.set(4.4, 3.6, 11.5); body.position.set(0, 0, -1.5); bird.add(body);
+    const head = new THREE.Mesh(new THREE.SphereGeometry(1, 10, 8), mat);
+    head.scale.set(2.6, 2.4, 3.2); head.position.set(0, .4, 11); bird.add(head);
+    bird.scale.setScalar(.01);
+    scene.add(bird);
+    return { renderer, scene, cam, bird, R, L };
+  }
+  const H = { t: 0, phase: 'enter', pt: 0, th: 0, nextFlap: 3, flapT: -1, last: 0, w: 0, h: 0 };
+  const V = (x, y, z) => new THREE.Vector3(x, y, z);
+  function size() {
+    const r = hero.getBoundingClientRect();
+    if (r.width === H.w && r.height === H.h) return;
+    H.w = r.width; H.h = r.height;
+    R3.renderer.setSize(H.w, H.h, false);
+    R3.cam.aspect = H.w / H.h; R3.cam.updateProjectionMatrix(); R3.cam.updateMatrixWorld();
+  }
+  function ray(sx, sy, d) { // screen point (px, hero coords) at distance d from the camera
+    const v = V(sx / H.w * 2 - 1, -(sy / H.h * 2 - 1), .5).unproject(R3.cam).normalize();
+    return v.multiplyScalar(d);
+  }
+  function geo() {
+    const h = hero.getBoundingClientRect(), c = card.getBoundingClientRect(), t = document.getElementById('h1').getBoundingClientRect();
+    return { left: c.left - h.left, top: c.top - h.top, bottom: c.bottom - h.top, cw: c.width, stacked: h.width < 1060, h1Top: t.top - h.top, h1H: t.height };
+  }
+  function orbit(g) { // circle centre and radius in world units
+    const st = g.stacked;
+    const C = st ? ray(H.w * .72, g.h1Top + g.h1H * .5, 56) : ray(g.left + g.cw * .42, g.bottom + 118, 40);
+    return { C, R: st ? 1.7 : 6.2 };
+  }
+  const bez = (a, b, c, t) => a.clone().multiplyScalar((1 - t) * (1 - t)).add(b.clone().multiplyScalar(2 * (1 - t) * t)).add(c.clone().multiplyScalar(t * t));
+  const bezD = (a, b, c, t) => b.clone().sub(a).multiplyScalar(2 * (1 - t)).add(c.clone().sub(b).multiplyScalar(2 * t));
+  function wings(t) {
+    let a = .2 + .035 * Math.sin(t * 1.3), hnd = .05 * Math.sin(t * 1.3 + .6);
+    if (H.flapT >= 0) {
+      const k = (t - H.flapT) / .34;
+      if (k > 3) { H.flapT = -1; H.nextFlap = t + 9 + Math.random() * 7; }
+      else { const env = Math.sin(Math.PI * k / 3); a += .62 * env * Math.sin(2 * Math.PI * k); hnd += .38 * env * Math.sin(2 * Math.PI * k - .9); }
+    } else if (t > H.nextFlap) H.flapT = t;
+    R3.R.arm.rotation.z = a;  R3.R.hand.rotation.z = hnd;
+    R3.L.arm.rotation.z = -a; R3.L.hand.rotation.z = -hnd;
+  }
+  function pose(p, v, bank) {
+    const b = R3.bird; b.position.copy(p);
+    // Attitude stays level: a gliding hawk descends without pointing its nose down.
+    b.lookAt(p.clone().add(V(v.x, 0, v.z)));
+    b.rotateZ(bank);
+    b.rotateX(-.06); // slight nose-down glide attitude
+  }
+  function step(now) {
+    requestAnimationFrame(step);
+    const dt = Math.min(.05, (now - (H.last || now)) / 1000); H.last = now;
+    if (reduced || root.getAttribute('data-mode') === 'night' || document.hidden || !heroOnScreen) return;
+    if (!R3) { R3 = build(); if (!R3) { canvas.remove(); return; } canvas.classList.add('on'); }
+    size(); H.t += dt;
+    R3.bird.scale.setScalar(H.w < 760 ? .0072 : .01);
+    const g = geo(), o = orbit(g);
+    const omega = 2 * Math.PI / 30;
+    if (H.phase === 'enter') {
+      if (!H.path) {
+        H.th = Math.PI * .15;                                      // join point on the circle
+        const E = o.C.clone().add(V(o.R * Math.cos(H.th), 0, o.R * Math.sin(H.th)));
+        const T = V(-Math.sin(H.th), 0, Math.cos(H.th));
+        // Starts ~3x farther out along nearly the same sightline: small, hazy, and higher,
+        // then glides in toward the viewer and settles into the circle.
+        const S = ray(g.stacked ? H.w * .55 : g.left + g.cw * .05, g.stacked ? g.h1Top + g.h1H * .1 : g.bottom + 30, 125);
+        H.path = { S, P: E.clone().sub(T.multiplyScalar(o.R * 2.2)), E, dur: 13 };
+      }
+      H.pt += dt / H.path.dur;
+      const u = Math.min(1, H.pt), e = 1 - Math.pow(1 - u, 2.2);  // eases into the circle
+      const p = bez(H.path.S, H.path.P, H.path.E, e), v = bezD(H.path.S, H.path.P, H.path.E, e);
+      pose(p, v, -.18 * e);
+      if (u >= 1) H.phase = 'orbit';
+    } else {
+      H.th += dt * omega;
+      const lift = Math.sin(H.t / 9) * .5;                         // rides the thermal up and down
+      const p = o.C.clone().add(V(o.R * Math.cos(H.th), lift, o.R * Math.sin(H.th)));
+      const v = V(-Math.sin(H.th), Math.cos(H.t / 9) * .02, Math.cos(H.th));
+      pose(p, v, -.36);
+    }
+
+    wings(H.t);
+    R3.renderer.render(R3.scene, R3.cam);
+  }
+  requestAnimationFrame(step);
+  })();
 }
