@@ -549,3 +549,24 @@ footer.site{background:var(--blue);color:#fff;padding-block:clamp(4rem,8vw,6rem)
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .menu{clip-path:none}
 }
+
+/* ---------- Work grid, tablet (760–1149px) ----------
+   One card per row, each split side by side: text on the left, media on the
+   right. Two columns at this width forced paired cards to the same height,
+   which stretched the shorter card's image area. */
+@media (min-width:760px) and (max-width:1149px){
+  .grid{grid-template-columns:1fr}
+  .card{min-height:0}
+  .card.e,.card.e.fit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-rows:auto;min-height:380px}
+  .card.e.fit .e-img{min-height:0}
+  .card.e.fit .e-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .card.e .e-img.shot{padding:28px 28px 28px 0}
+  .card.e .e-img.shot img{position:static;width:100%;max-width:380px;height:auto;object-fit:contain}
+  .card.f{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;gap:28px;padding:28px}
+  .card.f .f-txt{order:-1;flex-direction:column;align-items:flex-start;justify-content:flex-end;align-self:stretch}
+  .card.yc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px;padding:16px}
+  .card.yc .d-txt{order:-1;justify-content:flex-end;padding:12px 8px 12px 12px}
+  .card.yc .yc-art{min-height:320px}
+  .card.d.c6{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;gap:28px;padding:24px}
+  .card.d.c6 .d-txt{order:-1;justify-content:flex-end;align-self:stretch;padding:8px}
+}
