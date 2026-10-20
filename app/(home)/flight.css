@@ -100,6 +100,11 @@ section{padding-block:clamp(5rem,11vw,9.5rem);scroll-margin-top:calc(env(safe-ar
 @media (min-width:1060px){.hero-in{grid-template-columns:minmax(0,1.1fr) minmax(380px,.9fr);align-items:start;column-gap:clamp(2rem,4vw,4.5rem)}}
 .hero-copy{min-width:0}
 .hero h1{font-size:clamp(3.2rem,9vw,7rem);margin-top:.5rem}
+/* Size the headline to its column so each line stays on one line.
+   At weight 850 / width 125%, "Build it right." runs ~7.2em wide; 13.2cqi
+   leaves ~3% spare. The clamp() stays as the ceiling and the fallback. */
+.hero-copy{container-type:inline-size}
+@supports (font-size:1cqi){.hero h1{font-size:min(clamp(3.2rem,9vw,7rem),13.2cqi)}}
 
 /* night hero fallback (before WebGL paints) */
 :root[data-mode="night"] .hero{background:linear-gradient(180deg,#040817 0%,#0A1840 50%,#1D2C5C 70%,#0A0F1F 100%)}
