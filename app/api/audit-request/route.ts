@@ -1,15 +1,51 @@
-import nodemailer from 'nodemailer'
+import nodemailer, { type Transporter } from 'nodemailer'
 import { NextResponse } from 'next/server'
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-})
+/**
+ * Form notifications (homepage contact form and /atlanta audit form).
+ *
+ * Sends through any SMTP mailbox. Production uses the Hostinger mailbox
+ * hello@alldaze.studio (smtp.hostinger.com:465) and delivers to NOTIFY_TO.
+ *
+ *   SMTP_HOST   default smtp.hostinger.com
+ *   SMTP_PORT   default 465 (implicit TLS); 587 uses STARTTLS
+ *   SMTP_USER   mailbox address, e.g. hello@alldaze.studio
+ *   SMTP_PASS   mailbox password
+ *   SMTP_FROM   optional From address; defaults to SMTP_USER
+ *   NOTIFY_TO   where notifications go, e.g. design@alldazework.com
+ */
+function mailConfig() {
+  const user = process.env.SMTP_USER
+  const pass = process.env.SMTP_PASS
+  const to = process.env.NOTIFY_TO
+  if (!user || !pass || !to) return null
+  const port = Number(process.env.SMTP_PORT || 465)
+  return {
+    transport: {
+      host: process.env.SMTP_HOST || 'smtp.hostinger.com',
+      port,
+      secure: port === 465,
+      auth: { user, pass },
+      // Fail fast so a slow mail server can't leave the form spinning.
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 15_000,
+    },
+    from: process.env.SMTP_FROM || user,
+    to,
+  }
+}
+
+let transporter: Transporter | null = null
+let transporterKey = ''
+function getTransporter(cfg: NonNullable<ReturnType<typeof mailConfig>>) {
+  const key = JSON.stringify(cfg.transport)
+  if (!transporter || key !== transporterKey) {
+    transporter = nodemailer.createTransport(cfg.transport)
+    transporterKey = key
+  }
+  return transporter
+}
 
 export async function POST(req: Request) {
   let body: Record<string, unknown>
@@ -41,10 +77,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
+  const cfg = mailConfig()
+  if (!cfg) {
+    console.error('[audit-request] SMTP_USER, SMTP_PASS and NOTIFY_TO must be set')
+    return NextResponse.json({ error: 'Failed to send' }, { status: 500 })
+  }
+
   try {
-    await transporter.sendMail({
-      from: `"AllDazeWork Site" <${process.env.SMTP_USER}>`,
-      to: process.env.NOTIFY_TO,
+    await getTransporter(cfg).sendMail({
+      from: `"AllDazeWork Site" <${cfg.from}>`,
+      to: cfg.to,
       replyTo: email,
       subject: fromHome ? `New project inquiry — ${name}` : `New audit request — ${name}`,
       text: `
