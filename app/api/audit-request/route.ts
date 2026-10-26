@@ -2,7 +2,7 @@ import nodemailer, { type Transporter } from 'nodemailer'
 import { NextResponse } from 'next/server'
 
 /**
- * Form notifications (homepage contact form and /atlanta audit form).
+ * Form notifications from the homepage contact form.
  *
  * Sends through any SMTP mailbox. Production uses the Hostinger mailbox
  * hello@alldaze.studio (smtp.hostinger.com:465) and delivers to NOTIFY_TO.
@@ -61,7 +61,8 @@ export async function POST(req: Request) {
   const goal = str(body.goal, 200)
   const message = str(body.message, 2000)
   const website = str(body.website, 300)
-  // Which form sent it: the /atlanta audit form (default) or the homepage contact form.
+  // Which form sent it. Only the homepage form remains; the non-homepage
+  // branch served the retired /atlanta page.
   const fromHome = body.source === 'homepage'
   const esc = (v: string) =>
     v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
