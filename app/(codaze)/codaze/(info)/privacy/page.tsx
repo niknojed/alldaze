@@ -53,6 +53,14 @@ export default function CodazePrivacyPage() {
         <li><strong>Messages you send.</strong> When Codaze opens Messages or Mail so you can text your coparent, the message goes through your phone&rsquo;s own app. We don&rsquo;t receive or keep it.</li>
       </ul>
 
+      <h2 id="waitlist">The waitlist</h2>
+      <p>
+        If you join the waitlist on alldaze.studio/codaze, we keep your email address, your answer to whether your coparent uses a coparenting app (if you give one), and when you signed up. We use the email once, to tell you Codaze is in the App Store. The answer helps us plan; it&rsquo;s never linked to an account.
+      </p>
+      <p>
+        The list is stored with Supabase. We delete it once the launch email has gone out, and sooner for anyone who asks at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+
       <h2 id="use">How we use it</h2>
       <p>We use your data to run Codaze: to show it to you, keep it in step, back it up, send sign-in and password emails, and answer you when you write to support.</p>
       <p>We don&rsquo;t use it for advertising, we don&rsquo;t build profiles about you, and we don&rsquo;t use it to train AI models. Codaze has no analytics or advertising tools inside the app.</p>
@@ -61,7 +69,7 @@ export default function CodazePrivacyPage() {
       <p>In this version of Codaze, only you can see your data. When sharing with a coparent arrives, this policy will say exactly what they see, and you&rsquo;ll choose what to share.</p>
       <p>We rely on a few providers to run the service. They handle data only to provide their service to us:</p>
       <ul>
-        <li><strong>Supabase</strong> hosts the database, file storage and sign-in, and sends account emails.</li>
+        <li><strong>Supabase</strong> hosts the database, file storage and sign-in, sends account emails, and stores the waitlist.</li>
         <li><strong>Apple</strong> distributes the app through the App Store. Apple&rsquo;s own privacy policy covers what Apple collects.</li>
         <li><strong>Hostinger</strong> hosts these web pages.</li>
       </ul>

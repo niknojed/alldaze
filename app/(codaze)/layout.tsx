@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
-import Link from 'next/link';
-import { HeldMark } from '@/components/legal/HeldMark';
 import './codaze.css';
 
 /**
- * Root layout for the Codaze pages on alldaze.studio/codaze. Its own
+ * Root layout for the Codaze pages on alldaze.studio/codaze. The home page
+ * (codaze/page.tsx) brings its own chrome; the support and legal pages share
+ * the header and footer in codaze/(info)/layout.tsx. Its own
  * stylesheet and font, so it can't change the studio homepage and the other
  * way round. Type follows the app: Visby CF for headings (licensed for web
  * use by Kinan), DM Sans (OFL) for text. Both are vendored in ./fonts, so
@@ -42,39 +42,13 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#FFFFFF',
+  themeColor: '#F6F1E8',
 };
 
 export default function CodazeLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${visby.variable}`}>
-      <body>
-        <a className="skip" href="#main">Skip to content</a>
-        <header className="cz-head">
-          <div className="cz-wrap cz-head-in">
-            <span className="cz-brand">
-              <HeldMark size={32} />
-              <span>Codaze</span>
-            </span>
-            <nav aria-label="Codaze pages">
-              <Link href="/codaze/support">Support</Link>
-              <Link href="/codaze/privacy">Privacy</Link>
-              <Link href="/codaze/terms">Terms</Link>
-            </nav>
-          </div>
-        </header>
-        <main id="main" className="cz-wrap cz-main">
-          {children}
-        </main>
-        <footer className="cz-foot">
-          <div className="cz-wrap">
-            <p>
-              Codaze is made by <a href="https://alldaze.studio">AllDazeWork</a>, a design and engineering studio in Atlanta, Georgia.
-            </p>
-            <p>© 2026 Adams &amp; Sol LLC, doing business as AllDazeWork</p>
-          </div>
-        </footer>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
