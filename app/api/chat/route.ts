@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { talonSystemPrompt } from '@/lib/talon';
+import { clientIp, rateLimit } from '@/lib/rate-limit';
 
 /**
  * POST /api/chat
@@ -32,6 +33,14 @@ interface IncomingMessage {
 }
 
 export async function POST(req: NextRequest) {
+  const limited = rateLimit('chat', clientIp(req));
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: 'Talon needs a short break. Try again in a few minutes, or use the contact form.' },
+      { status: 429, headers: { 'Retry-After': String(limited.retryAfter) } }
+    );
+  }
+
   if (!process.env.ANTHROPIC_API_KEY) {
     console.error('[chat] ANTHROPIC_API_KEY is not set');
     return NextResponse.json(
