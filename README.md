@@ -10,14 +10,16 @@ Next.js 15 (App Router), React 18, TypeScript. Deployed on Hostinger (Node.js ap
 |---|---|---|
 | `/` | `app/(home)` | Studio homepage. Static markup in `components/flight/markup.ts`, behaviour in `components/flight/runtime.js` (review tool, Talon, contact form, day/night sky, hawk). |
 | `/privacy` | `app/(legal)` | Privacy policy for the studio website. |
+| `/codaze` | `app/(codaze)/codaze/page.tsx` | Codaze home: a day told hour by hour, Journal, handoffs, FAQ and the waitlist. Styles in `home.css` next to it (all under `.czh`), interactive parts in `components/codaze-home`, illustrations in `public/codaze`. |
 | `/codaze/privacy` | `app/(codaze)` | Codaze privacy policy. Linked from the app and App Store Connect. |
 | `/codaze/terms` | `app/(codaze)` | Codaze terms of use. Linked from the app. |
 | `/codaze/support` | `app/(codaze)` | Codaze support. App Store Connect support URL. |
 | `/api/audit-request` | `app/api/audit-request` | Contact form → email through the hello@alldaze.studio mailbox. |
+| `/api/codaze/waitlist` | `app/api/codaze/waitlist` | Codaze waitlist → `codaze_waitlist` in the Codaze Supabase project. Answers 200 for a repeat email too. |
 | `/api/chat` | `app/api/chat` | Talon, the AI guide (Anthropic API). Prompt in `lib/talon.ts`. |
 | `/sitemap.xml`, `/robots.txt` | `app/sitemap.ts`, `app/robots.ts` | Add new public routes to the sitemap. |
 
-Each folder in parentheses is a route group with its **own root layout and stylesheet** (`flight.css`, `legal.css`, `codaze.css`), so the pages can't restyle each other. Moving between groups is a full page load, which is expected.
+Each folder in parentheses is a route group with its **own root layout and stylesheet** (`flight.css`, `legal.css`, `codaze.css`), so the pages can't restyle each other. Moving between groups is a full page load, which is expected. Inside `app/(codaze)`, the home page brings its own header and footer; Support, Privacy and Terms share the ones in `codaze/(info)/layout.tsx`.
 
 Redirects live in `next.config.mjs`: `www` → apex (permanent) and the retired `/atlanta` → `/` (temporary on purpose).
 
@@ -34,6 +36,7 @@ All fonts are self-hosted; no page calls Google Fonts.
 
 - Talon: 25 requests per 10 minutes and 100 per day (one full conversation fits, with room to retry).
 - Contact form: 5 per hour and 15 per day.
+- Codaze waitlist: 5 per hour and 10 per day.
 
 Over the limit, the route answers 429 with `Retry-After`; the page shows a friendly message. Counts reset when the app restarts. If the site ever runs on more than one instance, move the store to Redis or similar behind the same function.
 
@@ -46,6 +49,7 @@ Copy `.env.example` to `.env.local` for local work. In production, set the same 
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` (optional) | Contact form mail |
 | `NOTIFY_TO` | Where contact form notifications go |
 | `ANTHROPIC_API_KEY` | Talon |
+| `CODAZE_SUPABASE_URL`, `CODAZE_SUPABASE_ANON_KEY` | Codaze waitlist. The anon key only, never the service-role key. Without them the form says signups are paused. The table comes from `supabase/migrations/20261026000000_codaze_waitlist.sql` in the Codaze repo. |
 
 ## Commands
 
@@ -64,7 +68,7 @@ Names, contact addresses and "last updated" dates live in `components/legal/shar
 
 ## Analytics
 
-Google Tag Manager (`GTM-52SJQJGM`) and the Google Ads tag (`AW-18351416027`) load on the homepage only (`components/Analytics.tsx`). The contact form pushes `lead_submit` to the data layer on success.
+Google Tag Manager (`GTM-52SJQJGM`) and the Google Ads tag (`AW-18351416027`) load on the homepage only (`components/Analytics.tsx`). The contact form pushes `lead_submit` to the data layer on success. The Codaze pages load no tags.
 
 ## Not deployed
 

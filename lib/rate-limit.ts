@@ -13,10 +13,12 @@
  *          retry, whether it's about starting a project or, later, Codaze
  *          guidance on the parent articles. 100 a day covers several.
  *   lead — the contact form: 5 an hour, 15 a day.
+ *   waitlist — the Codaze waitlist: one signup, plus a typo fix or two and a
+ *          partner on the same wifi. 5 an hour, 10 a day.
  */
 
 type Window = { limit: number; ms: number };
-export type LimitName = 'chat' | 'lead';
+export type LimitName = 'chat' | 'lead' | 'waitlist';
 
 const LIMITS: Record<LimitName, Window[]> = {
   chat: [
@@ -26,6 +28,10 @@ const LIMITS: Record<LimitName, Window[]> = {
   lead: [
     { limit: 5, ms: 60 * 60_000 },
     { limit: 15, ms: 24 * 60 * 60_000 },
+  ],
+  waitlist: [
+    { limit: 5, ms: 60 * 60_000 },
+    { limit: 10, ms: 24 * 60 * 60_000 },
   ],
 };
 
