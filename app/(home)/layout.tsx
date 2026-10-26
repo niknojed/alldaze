@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from 'next';
 import { AnalyticsBody, AnalyticsHead } from '@/components/Analytics';
+import '../archivo.css';
 import './flight.css';
 
 /**
- * Root layout for the homepage. It carries its own stylesheet (no Tailwind
- * preflight) so the landing pages in app/(landing) can't change it, and the
- * other way round.
+ * Root layout for the homepage. It carries its own stylesheet, so the other
+ * root layouts (app/(codaze), app/(legal)) can't change it, and the other way
+ * round. Archivo is self-hosted (app/archivo.css); the page makes no request
+ * to Google Fonts.
  */
 
 const DESCRIPTION =
@@ -57,13 +59,7 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: MODE_SCRIPT }} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap"
-        />
+        <link rel="preload" href="/fonts/archivo/archivo-latin-normal.woff2" as="font" type="font/woff2" crossOrigin="" />
         <AnalyticsHead />
       </head>
       <body>

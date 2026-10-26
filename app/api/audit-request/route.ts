@@ -1,5 +1,6 @@
 import nodemailer, { type Transporter } from 'nodemailer'
 import { NextResponse } from 'next/server'
+import { clientIp, rateLimit } from '@/lib/rate-limit'
 
 /**
  * Form notifications from the homepage contact form.
@@ -71,6 +72,15 @@ export async function POST(req: Request) {
   // so they don't get feedback to refine their attack.
   if (website.length > 0) {
     return NextResponse.json({ success: true })
+  }
+
+  // Per-IP limit, after the honeypot so bots don't learn where the limit sits.
+  const limited = rateLimit('lead', clientIp(req))
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: 'Too many messages from this connection. Try again later, or email design@alldazework.com.' },
+      { status: 429, headers: { 'Retry-After': String(limited.retryAfter) } }
+    )
   }
 
   // basic validation

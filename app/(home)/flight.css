@@ -483,6 +483,8 @@ footer.site{background:var(--blue);color:#fff;padding-block:clamp(4rem,8vw,6rem)
 .f-row{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2.5rem;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.3);font-weight:600}
 .f-row nav{display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
 .f-row nav a{text-decoration:none}
+.f-mail{color:inherit;text-decoration:underline;text-underline-offset:4px}
+.f-mail:hover{text-decoration-thickness:2px}
 .f-row nav a:hover{text-decoration:underline;text-underline-offset:4px}
 
 /* reveal: visible at rest */
