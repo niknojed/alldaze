@@ -15,7 +15,7 @@ import { CODAZE_APP_STORE_URL } from '@/components/legal/shared';
  */
 export const metadata: Metadata = {
   title: 'You’re invited',
-  description: 'Your coparent invited you to plan your kids’ days together in Codaze.',
+  description: 'You’re invited to plan your kids’ days together in Codaze.',
   robots: { index: false, follow: false },
   referrer: 'no-referrer',
 };
@@ -30,7 +30,7 @@ export default async function InvitePage({ params }: { params: Promise<{ code: s
     return (
       <>
         <h1>This link doesn&rsquo;t look right</h1>
-        <p className="cz-lede">Ask your coparent to send the invite again from Codaze.</p>
+        <p className="cz-lede">Ask whoever sent it to send the invite again from Codaze.</p>
         <p><Link href="/codaze">About Codaze</Link></p>
       </>
     );
@@ -39,7 +39,7 @@ export default async function InvitePage({ params }: { params: Promise<{ code: s
   return (
     <>
       <h1>You&rsquo;re invited to Codaze</h1>
-      <p className="cz-lede">Your coparent invited you to plan your kids&rsquo; days together: the swaps, checklists and what happened, on one plan you both see.</p>
+      <p className="cz-lede">You&rsquo;re invited to plan your kids&rsquo; days together: who has them when, pickups, checklists and what happened, on one plan you both see.</p>
 
       <ol className="cz-steps">
         <li>
@@ -47,7 +47,7 @@ export default async function InvitePage({ params }: { params: Promise<{ code: s
           {CODAZE_APP_STORE_URL ? (
             <p><a className="cz-store" href={CODAZE_APP_STORE_URL} rel="noreferrer">Download on the App Store</a></p>
           ) : (
-            <p>Codaze isn&rsquo;t in the App Store yet. Your coparent can tell you how they got it.</p>
+            <p>Codaze isn&rsquo;t in the App Store yet. Ask whoever sent the invite how they got it.</p>
           )}
         </li>
         <li>
@@ -60,7 +60,7 @@ export default async function InvitePage({ params }: { params: Promise<{ code: s
         Or tap <strong>Have an invite code?</strong> when you sign up, and enter <span className="cz-code-val">{code}</span>
       </p>
 
-      <p>Your Journal stays yours. <Link href="/codaze/privacy#who">What your coparent sees</Link></p>
+      <p>Your Journal stays yours. <Link href="/codaze/privacy#who">Who sees what</Link></p>
     </>
   );
 }
