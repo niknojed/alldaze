@@ -68,3 +68,11 @@ body {
 .cz-foot a { color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Invite landing (codaze/i/[code]) */
+.cz-steps { margin-top: 28px; padding-left: 1.4em; }
+.cz-steps li + li { margin-top: 20px; }
+.cz-steps li p { margin-top: 4px; }
+.cz-store { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 999px; background: var(--ink); color: #fff !important; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.cz-code { margin-top: 28px; padding: 16px 20px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 16px; }
+.cz-code-val { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 600; letter-spacing: 0.12em; white-space: nowrap; }

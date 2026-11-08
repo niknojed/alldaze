@@ -52,7 +52,7 @@ export default function CodazeTermsPage() {
 
       <h2 id="ending">Ending your use</h2>
       <p>
-        You can stop using Codaze and delete your account at any time from Settings in the app. We may suspend or close an account that breaks these terms, and we&rsquo;ll tell you why unless the law prevents it.
+        You can stop using Codaze and delete your account at any time from Me in the app. We may suspend or close an account that breaks these terms, and we&rsquo;ll tell you why unless the law prevents it.
       </p>
 
       <h2 id="warranty">No warranty</h2>
