@@ -25,8 +25,21 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     ),
   },
   {
+    q: 'How do I invite my coparent?',
+    a: (
+      <>
+        <p>Open <strong>Collabs</strong>, tap your coparent, then tap the <strong>Invite</strong> row under Contact. Codaze writes the message; you send it from your own Messages. The link works for 14 days, and you can resend or cancel it from the same place.</p>
+        <p>Your coparent sees your shared plan once they accept. Your Journal stays yours.</p>
+      </>
+    ),
+  },
+  {
+    q: 'My invite link opened a web page.',
+    a: <p>That means Codaze isn&rsquo;t installed yet. Install it, then tap the link in your message again. Or tap <strong>Have an invite code?</strong> on the sign-up screen and type the five characters at the end of the link.</p>,
+  },
+  {
     q: 'How do I turn Face ID on or off?',
-    a: <p>Tap your initial at the top of Today, open <strong>Settings</strong>, and use the Face ID switch.</p>,
+    a: <p>Tap your initial at the top of Today to open <strong>Me</strong>, and use the <strong>Sign in with Face ID</strong> switch.</p>,
   },
   {
     q: 'My ritual reminders don’t show up.',
@@ -49,13 +62,13 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   {
     q: 'Does Codaze track my location?',
     a: (
-      <p>No. During a swap, Codaze can use your location on your phone to tell you when you&rsquo;re close to the pickup spot. It isn&rsquo;t sent to us or to anyone else. See the <Link href="/codaze/privacy">Privacy Policy</Link>.</p>
+      <p>No. Codaze doesn&rsquo;t ask for or use your location. A swap is recorded when you mark it. See the <Link href="/codaze/privacy">Privacy Policy</Link>.</p>
     ),
   },
   {
     q: 'How do I delete my account?',
     a: (
-      <p>Tap your initial at the top of Today, open <strong>Settings</strong>, and tap <strong>Delete account</strong> at the bottom. Codaze asks you to confirm twice, then removes your account and everything in it.</p>
+      <p>Tap your initial at the top of Today to open <strong>Me</strong>, then tap <strong>Delete account</strong> at the bottom. Codaze asks you to confirm twice, then removes your account and everything in it.</p>
     ),
   },
 ];
