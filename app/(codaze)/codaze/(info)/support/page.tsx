@@ -54,15 +54,9 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     ),
   },
   {
-    q: 'Can my coparent join Codaze?',
-    a: (
-      <p>Not yet. This version of Codaze is your own record: you can add your coparent, partner and helpers, set your rhythm and log swaps. Inviting the other parent comes in a later release.</p>
-    ),
-  },
-  {
     q: 'Does Codaze track my location?',
     a: (
-      <p>No. Codaze doesn&rsquo;t ask for or use your location. A swap is recorded when you mark it. See the <Link href="/codaze/privacy">Privacy Policy</Link>.</p>
+      <p>No. Codaze never follows you, and it never draws a map. If you and your coparent both turn on <strong>Share location</strong>, each of you sees how close the other is during a swap: on the way, close by or here, with an estimate in minutes. Your coordinates never leave your phone, and either of you can turn it off for both. See the <Link href="/codaze/privacy">Privacy Policy</Link>.</p>
     ),
   },
   {

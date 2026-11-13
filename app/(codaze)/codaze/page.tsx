@@ -117,7 +117,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     q: 'What do you store?',
     a: (
       <>
-        Your account, your kids’ names and colours, the people and plans you add, and your Journal. Codaze doesn’t ask for or use your location. The <Link href="/codaze/privacy">privacy policy</Link> has the full list.
+        Your account, your kids’ names and colours, the people and plans you add, and your Journal. Where you are never leaves your phone. The <Link href="/codaze/privacy">privacy policy</Link> has the full list.
       </>
     ),
   },
@@ -282,7 +282,7 @@ export default function CodazeHome() {
           <div className="wrap">
             <div className="facts">
               <div className="fact"><h3>Changes start as a request</h3><p>A new time stays a proposal until it’s agreed. The record shows what was asked, what was agreed, and when.</p></div>
-              <div className="fact"><h3>No location, ever</h3><p>Codaze never asks where you are. A swap is recorded when you mark it, with the time you mark it.</p></div>
+              <div className="fact"><h3>How close, never where</h3><p>Location is off unless you both turn it on. Then, only during a swap, each of you sees on the way, close by or here. Never a map.</p></div>
               <div className="fact"><h3>Your Journal is yours</h3><p>Entries, photos, and voice notes are private to your account. Your coparent never sees them.</p></div>
               <div className="fact"><h3>Leave any time</h3><p>Delete your account from Me and everything you added goes with it.</p></div>
             </div>

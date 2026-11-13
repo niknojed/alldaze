@@ -12,6 +12,6 @@ export const CODAZE_APP_STORE_URL: string | null = null;
 /** The studio website and its privacy policy. */
 export const STUDIO_CONTACT_EMAIL = 'design@alldazework.com';
 /** Update when a policy's substance changes; pages print it as "Last updated". */
-export const CODAZE_POLICY_UPDATED = 'November 3, 2026';
+export const CODAZE_POLICY_UPDATED = 'November 11, 2026';
 export const CODAZE_TERMS_UPDATED = 'October 26, 2026';
 export const STUDIO_POLICY_UPDATED = 'October 26, 2026';
