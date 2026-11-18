@@ -36,6 +36,8 @@ export default function CodazePrivacyPage() {
         <dd>Your name and email address. Your password is handled by our sign-in provider; we can&rsquo;t read it.</dd>
         <dt>Your kids</dt>
         <dd>Names, nicknames, birthdays and the colour you pick for each child.</dd>
+        <dt>Your photo and your kids&rsquo; photos</dt>
+        <dd>The photo you add for yourself and the one you add for each child, if you add them. They are stored privately with your account, beside your Journal photos, so they come back when you sign in again or change phones. Only you can see them. A coparent or partner never sees your photos, and each parent adds their own.</dd>
         <dt>The people in your plans</dt>
         <dd>Names and roles of coparents, partners and helpers, and any phone number or email address you enter for them. Codaze doesn&rsquo;t contact them. An invite goes from your own Messages or share sheet.</dd>
         <dt>Invites</dt>
@@ -56,7 +58,6 @@ export default function CodazePrivacyPage() {
         <li><strong>Where an exchange spot is.</strong> It&rsquo;s kept only on the phone you set it on. You set it from where your phone is at that moment, or by typing an address. A typed address is looked up by Apple&rsquo;s maps service on your iPhone to find the place; only the address is part of that lookup, never where you are, and we never receive the address&rsquo;s place.</li>
         <li><strong>Location permission.</strong> Codaze asks for &ldquo;While Using the App&rdquo; and never for &ldquo;Always&rdquo;. While sharing runs, your iPhone shows its location indicator and Codaze shows &ldquo;Sharing with&rdquo; your coparent&rsquo;s name and a Stop button. If you decline, swaps work as before, without it.</li>
         <li><strong>Face ID.</strong> Apple handles it. Codaze only learns whether the check passed.</li>
-        <li><strong>Profile and kid photos.</strong> They stay on your phone and aren&rsquo;t uploaded.</li>
         <li><strong>Voice notes.</strong> They stay on your phone and aren&rsquo;t uploaded.</li>
         <li><strong>Reminders.</strong> Swap, check-in, ritual and weekly reminders are scheduled on your phone and don&rsquo;t pass through a server.</li>
         <li><strong>Messages you send.</strong> When Codaze opens Messages or Mail so you can text your coparent, the message goes through your phone&rsquo;s own app. We don&rsquo;t receive or keep it.</li>
@@ -109,12 +110,12 @@ export default function CodazePrivacyPage() {
       <h2 id="keep">How long we keep it, and deleting it</h2>
       <p>We keep your data while your account exists. You can delete any item in the app at any time.</p>
       <p>
-        To delete everything, tap your initial at the top of Today to open <strong>Me</strong>, then tap <strong>Delete account</strong> at the bottom. That removes your account and the data listed above, including Journal photos, from our service straight away, and clears Codaze&rsquo;s photos and voice notes from your phone. A plan you share with another parent stays with them, as Codaze tells you before you confirm. Copies in our hosting provider&rsquo;s backups are removed as those backups expire.
+        To delete everything, tap your initial at the top of Today to open <strong>Me</strong>, then tap <strong>Delete account</strong> at the bottom. That removes your account and the data listed above, including Journal photos, your photo and your kids&rsquo; photos, from our service straight away, and clears Codaze&rsquo;s photos and voice notes from your phone. A plan you share with another parent stays with them, as Codaze tells you before you confirm. Copies in our hosting provider&rsquo;s backups are removed as those backups expire.
       </p>
 
       <h2 id="security">Security</h2>
       <p>
-        Access rules on the database limit each account to its own data, and Journal photos sit in private storage. Sign-in uses your email and password, with optional Face ID on your phone. No system is perfect; if we learn of a breach that affects your data, we&rsquo;ll tell you.
+        Access rules on the database limit each account to its own data, and Journal photos, your photo and your kids&rsquo; photos sit in private storage that only your account can open. Sign-in uses your email and password, with optional Face ID on your phone. No system is perfect; if we learn of a breach that affects your data, we&rsquo;ll tell you.
       </p>
 
       <h2 id="rights">Your choices</h2>
