@@ -244,7 +244,7 @@ section{padding-block:clamp(5rem,11vw,9.5rem);scroll-margin-top:calc(env(safe-ar
 @media (min-width:1150px){.grid>.c3,.grid>.c6{grid-column:span 5}.grid>.c4,.grid>.c5{grid-column:span 7}}
 /* E fit: same layout as Pure Upscale, image never cropped */
 /* fit: desktop matches Pure Upscale (full-height image); stacked widths show the whole image */
-/* shot: product UI floated on the card colour, like the CV browser frame */
+/* shot: product UI floated on the card color, like the CV browser frame */
 .card.e .e-img.shot{display:flex;align-items:center;justify-content:center;padding:32px 32px 32px 8px;min-height:0;overflow:visible}
 .card.e .e-img.shot img{position:static;width:100%;max-width:400px;height:auto;object-fit:contain;border-radius:18px;box-shadow:0 30px 60px -28px rgba(30,10,70,.55),0 0 0 1px rgba(30,10,70,.08)}
 .card:hover .e-img.shot img{transform:translateY(-4px)}

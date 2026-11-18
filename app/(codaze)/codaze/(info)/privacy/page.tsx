@@ -35,7 +35,7 @@ export default function CodazePrivacyPage() {
         <dt>Your account</dt>
         <dd>Your name and email address. Your password is handled by our sign-in provider; we can&rsquo;t read it.</dd>
         <dt>Your kids</dt>
-        <dd>Names, nicknames, birthdays and the colour you pick for each child.</dd>
+        <dd>Names, nicknames, birthdays and the color you pick for each child.</dd>
         <dt>Your photo and your kids&rsquo; photos</dt>
         <dd>The photo you add for yourself and the one you add for each child, if you add them. They are stored privately with your account, beside your Journal photos, so they come back when you sign in again or change phones. Only you can see them. A coparent or partner never sees your photos, and each parent adds their own.</dd>
         <dt>The people in your plans</dt>
@@ -85,9 +85,9 @@ export default function CodazePrivacyPage() {
 
       <h2 id="who">Who can see it</h2>
       <p>Until you invite someone, only you can see your data.</p>
-      <p>Once your coparent accepts an invite, you both see what&rsquo;s on your shared plan: the rhythm and every swap, exchange spots, the swap checklist, guidelines, Activity (what happened, with times) and the changes either of you asks for. Each of you keeps your own name and colour for each kid.</p>
+      <p>Once your coparent accepts an invite, you both see what&rsquo;s on your shared plan: the rhythm and every swap, exchange spots, the swap checklist, guidelines, Activity (what happened, with times) and the changes either of you asks for. Each of you keeps your own name and color for each kid.</p>
       <p>Once your partner accepts an invite, they see the plan you share with them: its kids, activities and pickups, places, guidelines and Activity for those kids. They never see a plan you share with a coparent.</p>
-      <p>One thing widens that, and only if you turn it on, kid by kid: <strong>Also helps with</strong> on your partner&rsquo;s profile. Your partner then also sees when that kid is home with you, your events on those days, a pickup you hand them, the name and colour you use for that kid, and the other parent&rsquo;s first name. Nothing else of that plan. Turn it off and it stops at once.</p>
+      <p>One thing widens that, and only if you turn it on, kid by kid: <strong>Also helps with</strong> on your partner&rsquo;s profile. Your partner then also sees when that kid is home with you, your events on those days, a pickup you hand them, the name and color you use for that kid, and the other parent&rsquo;s first name. Nothing else of that plan. Turn it off and it stops at once.</p>
       <p>Your Journal, check-ins, promises and rituals are only yours. Your coparent can&rsquo;t see them, and neither can anyone you add to a plan.</p>
       <p>If either of you ends the pact or deletes your account, each keeps a copy of the shared plan as it stood. Neither keeps anything of the other&rsquo;s Journal, which was never shared.</p>
       <p>We rely on a few providers to run the service. They handle data only to provide their service to us:</p>

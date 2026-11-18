@@ -117,7 +117,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     q: 'What do you store?',
     a: (
       <>
-        Your account, your kids’ names and colours, the people and plans you add, and your Journal. Where you are never leaves your phone. The <Link href="/codaze/privacy">privacy policy</Link> has the full list.
+        Your account, your kids’ names and colors, the people and plans you add, and your Journal. Where you are never leaves your phone. The <Link href="/codaze/privacy">privacy policy</Link> has the full list.
       </>
     ),
   },
