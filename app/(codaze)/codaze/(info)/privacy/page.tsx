@@ -39,7 +39,7 @@ export default function CodazePrivacyPage() {
         <dt>The people in your plans</dt>
         <dd>Names and roles of coparents, partners and helpers, and any phone number or email address you enter for them. Codaze doesn&rsquo;t contact them. An invite goes from your own Messages or share sheet.</dd>
         <dt>Invites</dt>
-        <dd>The invite code, who it&rsquo;s for, and when it was used, cancelled or ran out. A code ends after 14 days.</dd>
+        <dd>The invite code, who it&rsquo;s for, and when it was used, cancelled or ran out. A code ends after 14 days. A note you add to an invite is shown to whoever opens its link.</dd>
         <dt>Your plans</dt>
         <dd>Rhythms and swap times, special days and school breaks, events and who takes and picks up for them, pickups, the names of places and the addresses you type, changes and requests, checklists and guidelines.</dd>
         <dt>Your Journal</dt>
@@ -94,6 +94,7 @@ export default function CodazePrivacyPage() {
         <li><strong>Supabase</strong> hosts the database, file storage and sign-in, sends account emails, and stores the waitlist.</li>
         <li><strong>Apple</strong> distributes the app through the App Store, delivers notifications to your iPhone, and looks up an address you type for an exchange spot. Apple&rsquo;s own privacy policy covers what Apple collects.</li>
         <li><strong>Expo</strong> passes notifications from our server to Apple. It receives your phone&rsquo;s push token and the notification&rsquo;s text.</li>
+        <li><strong>Expo</strong> also delivers app updates. When you open Codaze it asks Expo whether a newer version of the app&rsquo;s code is available. That request includes your phone&rsquo;s platform, the app&rsquo;s version and a random id made by this install. It does not include your account or anything you have entered.</li>
         <li><strong>Hostinger</strong> hosts these web pages.</li>
       </ul>
       <p>
