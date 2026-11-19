@@ -89,6 +89,7 @@ export default function CodazePrivacyPage() {
       <p>Once your partner accepts an invite, they see the plan you share with them: its kids, activities and pickups, places, guidelines and Activity for those kids. They never see a plan you share with a coparent.</p>
       <p>One thing widens that, and only if you turn it on, kid by kid: <strong>Also helps with</strong> on your partner&rsquo;s profile. Your partner then also sees when that kid is home with you, your events on those days, a pickup you hand them, the name and color you use for that kid, and the other parent&rsquo;s first name. Nothing else of that plan. Turn it off and it stops at once.</p>
       <p>Your Journal, check-ins, promises and rituals are only yours. Your coparent can&rsquo;t see them, and neither can anyone you add to a plan.</p>
+      <p>One kind of ritual is different, and only when you choose it: a ritual you share on a plan. The other person on that plan sees what you agreed &mdash; its name, the kids, who does it, the days and the time &mdash; and it starts only once they agree. They never see whether or when you did it; that stays in your Journal, as theirs stays in their own.</p>
       <p>If either of you ends the pact or deletes your account, each keeps a copy of the shared plan as it stood. Neither keeps anything of the other&rsquo;s Journal, which was never shared.</p>
       <p>We rely on a few providers to run the service. They handle data only to provide their service to us:</p>
       <ul>
